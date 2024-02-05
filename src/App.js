@@ -2,9 +2,9 @@ import './App.css';
 import Button from '@mui/material/Button';
 import { BrowserRouter, Route } from 'react-router-dom';
 
-import Login from './Pages/Login'
-import Register from './Pages/Register'
-import Dashboard from './Pages/Dashboard'
+import Login from './Pages/Login';
+import Register from './Pages/Register';
+import Dashboard from './Pages/Dashboard';
 
 function App() {
   return (
