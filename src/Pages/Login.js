@@ -8,6 +8,11 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Input from '../Components/Input';
 import { Button } from '@mui/material';
+import ease from '../Images/Login/easy_to_use.svg';
+import grow from '../Images/Login/grow.svg';
+import buyers from '../Images/Login/more_buyers.svg';
+import cost from '../Images/Login/zero_cost.svg';
+import Benefits from '../Components/Benefits';
 
 function Login() {
   const [step, setStep] = useState(0);
@@ -30,7 +35,7 @@ function Login() {
   return (<div className='relative'>
     <Grid style={{minHeight:'100vh' }} container spacing={0}>
       <Grid style={{backgroundColor: '#1746A2'}} xs={6}>
-        
+        <Benefits icon={buyers} heading={"More Buyers"} desc = "Access to the entire buyer universe" />
       </Grid>
       <Grid className="relative" xs={6} >
       <Box className="rounded-3xl absolute z-20 bg-white" style={{left: '-10%', top: '50%', transform: 'translate(0, -50%)'}} sx={{ width: '100%' }}>
