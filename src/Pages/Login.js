@@ -34,9 +34,9 @@ function Login() {
       </Grid>
       <Grid className="relative" xs={6} >
       <Box className="rounded-3xl absolute z-20 bg-white" style={{left: '-10%', top: '50%', transform: 'translate(0, -50%)'}} sx={{ width: '100%' }}>
-        <Card className='rounded-3xl' variant="outlined">
-          <CardContent>
-          <Typography className='font-bold text-left' variant="h6" component="h6">{step==0? "Welcom to Incart": "Get your business started"} </Typography>
+        <Card className='rounded-3xl' style={{borderRadius: '10px'}} variant="outlined">
+          <CardContent style={{'padding': '3rem', borderRadius: '10px'}}>
+          <Typography className='font-bold text-left py-4' variant="h6" component="h6">{step==0? "Welcom to Incart": "Get your business started"} </Typography>
           <Typography>{step==0? "Create your account and start selling on Incart":"Fill in your shop details for better connectivity" }</Typography>
           {step==0 && 
           <>
