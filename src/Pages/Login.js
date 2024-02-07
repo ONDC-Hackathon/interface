@@ -8,10 +8,10 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Input from '../Components/Input';
 import { Button } from '@mui/material';
-import ease from '../Images/Login/easy_to_use.svg';
-import grow from '../Images/Login/grow.svg';
-import buyers from '../Images/Login/more_buyers.svg';
-import cost from '../Images/Login/zero_cost.svg';
+import ease from '../Images/Login/easy_to_use.png';
+import grow from '../Images/Login/grow.png';
+import buyers from '../Images/Login/more.png';
+import cost from '../Images/Login/zero_cost.png';
 import Benefits from '../Components/Benefits';
 
 function Login() {
@@ -34,8 +34,13 @@ function Login() {
   
   return (<div className='relative'>
     <Grid style={{minHeight:'100vh' }} container spacing={0}>
-      <Grid style={{backgroundColor: '#1746A2'}} xs={6}>
+      <Grid className='flex flex-row justify-center items-center' style={{backgroundColor: '#1746A2'}} xs={6}>
+        <div>
         <Benefits icon={buyers} heading={"More Buyers"} desc = "Access to the entire buyer universe" />
+        <Benefits icon={cost} heading={"Zero Cost"} desc = "No upfront cost to get started" />
+        <Benefits icon={ease} heading={"Easy to Use"} desc = "Start selling in no time" />
+        <Benefits icon={grow} heading={"Grow Your Business"} desc = "Promote your business with your own webpage" />
+        </div>
       </Grid>
       <Grid className="relative" xs={6} >
       <Box className="rounded-3xl absolute z-20 bg-white" style={{left: '-10%', top: '50%', transform: 'translate(0, -50%)'}} sx={{ width: '100%' }}>
