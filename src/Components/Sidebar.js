@@ -13,9 +13,7 @@ import Toolbar from '@mui/material/Toolbar';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import db_icon from '../Images/Dashboard/Widget 4.svg';
 import styles from '../Styles/sidebar.module.css';
-import MenuIcon from '@mui/icons-material/Menu';
 import AppBar from '@mui/material/AppBar';
-import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 
 const drawerWidth = 240;
@@ -74,11 +72,6 @@ function Sidebar(props) {
     setIsClosing(false);
   };
 
-  const handleDrawerToggle = () => {
-    if (!isClosing) {
-      setMobileOpen(!mobileOpen);
-    }
-  };
 
   const drawer = (
     <div style={{backgroundColor: '#1746a2'}}>
