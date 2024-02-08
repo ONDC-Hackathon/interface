@@ -1,181 +1,123 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import { styled, alpha } from '@mui/material/styles';
-import InputBase from '@mui/material/InputBase';
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import Toolbar from '@mui/material/Toolbar';
-import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
-import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
-import styles from '../Styles/sidebar.module.css';
-import AppBar from '@mui/material/AppBar';
-import SearchIcon from '@mui/icons-material/Search';
-import CategoryIcon from '@mui/icons-material/Category';
+import * as React from 'react'
+import { List, ListItem, ListItemIcon, ListItemText, Drawer, IconButton, useTheme, useMediaQuery } from '@mui/material'
+import DashboardIcon from '@mui/icons-material/Dashboard'
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
+import AccountCircleIcon from '@mui/icons-material/AccountCircle'
+import AddBoxIcon from '@mui/icons-material/AddBox'
+import ExitToAppIcon from '@mui/icons-material/ExitToApp'
+import MenuIcon from '@mui/icons-material/Menu'
+import { useNavigate, useLocation } from 'react-router-dom'
+import incartLogo from '../Images/incart_logo.png'
+import { useDispatch } from 'react-redux'
+import { logout } from '../Redux/features/auth.slice'
 
-const drawerWidth = 240;
+const Sidebar = () => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const theme = useTheme()
+  const location = useLocation()
+  const [isOpen, setIsOpen] = React.useState(true)
+  const [isActiveTab, setIsActiveTab] = React.useState(0)
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
 
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
-  color: theme.palette.common.black,
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.greybg, 0.15),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.greybg, 0.25),
-  },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: '100%',
-  [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(3),
-    width: 'auto',
-  },
-}));
+  React.useEffect(() => {
+    setIsOpen(!isMobile)
+  }, [isMobile])
 
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
+  const handleDrawerToggle = () => {
+    setIsOpen(!isOpen)
+  }
 
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '30ch',
-    },
-  },
-}));
+  const handleTabClick = (path, index) => {
+    setIsActiveTab(location.pathname === path ? index : -1)
+    navigate(path)
+    if (isMobile) {
+      setIsOpen(false)
+    }
+  }
 
-function Sidebar(props) {
-  const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [isClosing, setIsClosing] = React.useState(false);
+  const handleLogout = () => {
+    dispatch(logout())
+  }
 
-  const handleDrawerClose = () => {
-    setIsClosing(true);
-    setMobileOpen(false);
-  };
+  const drawerWidthOpen = 240
+  const drawerWidthClosed = 60
 
-  const handleDrawerTransitionEnd = () => {
-    setIsClosing(false);
-  };
+  const menuItems = [
+    { text: 'Dashboard', icon: <DashboardIcon />, path: '/' },
+    { text: 'Products', icon: <ShoppingCartIcon />, path: '/products' },
+    { text: 'Profile', icon: <AccountCircleIcon />, path: '/profile' },
+    { text: 'Add product', icon: <AddBoxIcon />, path: '/addproduct' },
+  ]
 
-  const MenuItems = [
-    { name: 'Dashboard', icon: <SpaceDashboardIcon/> },
-    { name: 'Categories', icon: <CategoryIcon/> },
-    { name: 'Products', icon: <SpaceDashboardIcon/> },
-    { name: 'Sales', icon: <SpaceDashboardIcon/> },
-    { name: 'Gateway', icon: <SpaceDashboardIcon/> },
-    { name: 'Profile', icon: <SpaceDashboardIcon/> },
-    { name: 'Add Product', icon: <SpaceDashboardIcon/> },
-  ];
-  const drawer = (
-    <div style={{backgroundColor: '#1746a2', color: '#aaaaaa'}}>
-      <Toolbar />
+  return (
+    <Drawer
+      variant="permanent"
+      sx={{
+        width: isOpen ? drawerWidthOpen : drawerWidthClosed,
+        transition: 'width 0.3s',
+        '& .MuiDrawer-paper': {
+          width: isOpen ? drawerWidthOpen : drawerWidthClosed,
+          backgroundColor: '#303F9F',
+          color: 'white',
+          transition: 'width 0.3s',
+          overflowX: 'hidden',
+        },
+      }}
+    >
+      <IconButton
+        edge="start"
+        aria-label="menu"
+        sx={{
+          m: 0,
+          display: isOpen ? 'none' : 'flex',
+          color: 'inherit',
+        }}
+        onClick={handleDrawerToggle}
+      >
+        <MenuIcon />
+      </IconButton>
+      <img
+        src={incartLogo}
+        alt=""
+        className="self-center mb-10 mt-2"
+        style={{ width: isMobile ? '70%' : 'auto' }}
+      />
       <List>
-        {MenuItems.map((item, index) => (
-          <ListItem key={index} disablePadding>
-            <ListItemButton disableRipple onClick={()=>{props.setSelected(index)}} selected={index==props.selected}>
-              <ListItemIcon>
-                {item.icon}
-              </ListItemIcon>
-              <ListItemText primary={item.name} />
-            </ListItemButton>
+        {menuItems.map((item, index) => (
+          <ListItem
+            button
+            key={item.text}
+            onClick={() => handleTabClick(item.path, index)}
+            sx={{
+              display: 'flex',
+              justifyContent: isOpen ? 'initial' : 'center',
+              backgroundColor: isActiveTab === index ? 'darkblue' : '',
+              '& .MuiListItemText-primary': {
+                fontWeight: isActiveTab === index ? 'bold' : '',
+              },
+            }}
+          >
+            <ListItemIcon sx={{ minWidth: 'auto', mr: isOpen ? 2 : 'auto', color: 'inherit' }}>
+              {item.icon}
+            </ListItemIcon>
+            <ListItemText
+              primary={item.text}
+              sx={{ display: isOpen ? 'block' : 'none', color: 'inherit' }}
+            />
           </ListItem>
         ))}
       </List>
-    </div>
-  );
-
-
-  return (
-    <Box sx={{ display: 'flex' }}>
-      <AppBar
-        position="fixed"
-        sx={{
-          width: { sm: `calc(100% - ${drawerWidth}px)` },
-          backgroundColor: 'white',
-          ml: { sm: `${drawerWidth}px` },
-        }}
-      >
-        <Toolbar sx={{display: 'flex', justifyContent: 'space-between', color: 'black'}}>
-        <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </Search>
-          <NotificationsNoneIcon />
-        </Toolbar>
-      </AppBar>
-      <Box
-        component="nav"
-        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-        aria-label="mailbox folders"
-      >
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-        <Drawer
-          variant="temporary"
-          open={mobileOpen}
-          onTransitionEnd={handleDrawerTransitionEnd}
-          onClose={handleDrawerClose}
-          style={{ backgroundColor: '--var(--blue)' }}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
-          }}
-          sx={{
-            display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth, backgroundColor: 'var(--blue)', color: '#aaaaaa' },
-          }}
-        >
-          {drawer}
-        </Drawer>
-        <Drawer
-          variant="permanent"
-          style={{ backgroundColor: '--var(--blue)' }}
-          sx={{
-            display: { xs: 'none', sm: 'block' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth, backgroundColor: 'var(--blue)', color: '#aaaaaa'},
-          }}
-          open
-        >
-          {drawer}
-        </Drawer>
-      </Box>
-      <Box
-        component="main"
-        sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
-        style={{ backgroundColor: 'var(--bg-grey)'}}
-      >
-        <Toolbar />
-        {props.children}
-      </Box>
-    </Box>
-  );
+      <List sx={{ position: 'absolute', bottom: 0, width: '100%' }}>
+        <ListItem button key="Logout" onClick={handleLogout}>
+          <ListItemIcon sx={{ minWidth: 'auto', mr: isOpen ? 2 : 'auto', color: 'inherit' }}>
+            <ExitToAppIcon />
+          </ListItemIcon>
+          <ListItemText primary="Logout" sx={{ display: isOpen ? 'block' : 'none', color: 'inherit' }} />
+        </ListItem>
+      </List>
+    </Drawer>
+  )
 }
 
-Sidebar.propTypes = {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * Remove this when copying and pasting into your project.
-   */
-  window: PropTypes.func,
-};
-
-export default Sidebar;
+export default Sidebar
