@@ -10,6 +10,10 @@
   height: 40vmin;
   pointer-events: none;
 }
+.Mui-selected{
+  color: white !important;
+  font-weight: 900 !important;
+}
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {

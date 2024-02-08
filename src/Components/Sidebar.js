@@ -11,10 +11,11 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Toolbar from '@mui/material/Toolbar';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
-import db_icon from '../Images/Dashboard/Widget 4.svg';
+import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
 import styles from '../Styles/sidebar.module.css';
 import AppBar from '@mui/material/AppBar';
 import SearchIcon from '@mui/icons-material/Search';
+import CategoryIcon from '@mui/icons-material/Category';
 
 const drawerWidth = 240;
 
@@ -72,18 +73,26 @@ function Sidebar(props) {
     setIsClosing(false);
   };
 
-
+  const MenuItems = [
+    { name: 'Dashboard', icon: <SpaceDashboardIcon/> },
+    { name: 'Categories', icon: <CategoryIcon/> },
+    { name: 'Products', icon: <SpaceDashboardIcon/> },
+    { name: 'Sales', icon: <SpaceDashboardIcon/> },
+    { name: 'Gateway', icon: <SpaceDashboardIcon/> },
+    { name: 'Profile', icon: <SpaceDashboardIcon/> },
+    { name: 'Add Product', icon: <SpaceDashboardIcon/> },
+  ];
   const drawer = (
-    <div style={{backgroundColor: '#1746a2'}}>
+    <div style={{backgroundColor: '#1746a2', color: '#aaaaaa'}}>
       <Toolbar />
       <List>
-        {['Dashboard', 'Categories', 'Products', 'Sales', 'Gateway', 'Profile', 'Add Product'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
+        {MenuItems.map((item, index) => (
+          <ListItem key={index} disablePadding>
+            <ListItemButton disableRipple onClick={()=>{props.setSelected(index)}} selected={index==props.selected}>
               <ListItemIcon>
-                {index % 2 === 0 ? <img className={styles.grey} src={db_icon} alt="" /> : <img className={styles.grey} src={db_icon} alt="" />}
+                {item.icon}
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText primary={item.name} />
             </ListItemButton>
           </ListItem>
         ))}
