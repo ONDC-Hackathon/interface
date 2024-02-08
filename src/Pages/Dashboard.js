@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
-import Sidebar from '../Components/Sidebar';
+import Sidebar from '../Components/Sidebar'
 
 function Dashboard() {
-
   return (
     <>
-      <Sidebar >
+      <Sidebar>
         <h1>This is sample child</h1>
       </Sidebar>
     </>

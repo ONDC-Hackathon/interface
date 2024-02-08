@@ -3,7 +3,12 @@ import Grid from '@mui/material/Unstable_Grid2' // Grid version 2
 
 function Benefits(props) {
   return (
-    <Grid style={{ width: 'max-content' }} className="text-left text-white" container spacing={2}>
+    <Grid
+      style={{ width: 'max-content' }}
+      className="text-left text-white"
+      container
+      spacing={2}
+    >
       <Grid className="" xs={2}>
         {' '}
         <img src={props.icon} alt="" />{' '}

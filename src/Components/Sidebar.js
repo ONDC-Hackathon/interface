@@ -1,5 +1,14 @@
 import * as React from 'react'
-import { List, ListItem, ListItemIcon, ListItemText, Drawer, IconButton, useTheme, useMediaQuery } from '@mui/material'
+import {
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Drawer,
+  IconButton,
+  useTheme,
+  useMediaQuery,
+} from '@mui/material'
 import DashboardIcon from '@mui/icons-material/Dashboard'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
@@ -98,7 +107,13 @@ const Sidebar = () => {
               },
             }}
           >
-            <ListItemIcon sx={{ minWidth: 'auto', mr: isOpen ? 2 : 'auto', color: 'inherit' }}>
+            <ListItemIcon
+              sx={{
+                minWidth: 'auto',
+                mr: isOpen ? 2 : 'auto',
+                color: 'inherit',
+              }}
+            >
               {item.icon}
             </ListItemIcon>
             <ListItemText
@@ -110,10 +125,15 @@ const Sidebar = () => {
       </List>
       <List sx={{ position: 'absolute', bottom: 0, width: '100%' }}>
         <ListItem button key="Logout" onClick={handleLogout}>
-          <ListItemIcon sx={{ minWidth: 'auto', mr: isOpen ? 2 : 'auto', color: 'inherit' }}>
+          <ListItemIcon
+            sx={{ minWidth: 'auto', mr: isOpen ? 2 : 'auto', color: 'inherit' }}
+          >
             <ExitToAppIcon />
           </ListItemIcon>
-          <ListItemText primary="Logout" sx={{ display: isOpen ? 'block' : 'none', color: 'inherit' }} />
+          <ListItemText
+            primary="Logout"
+            sx={{ display: isOpen ? 'block' : 'none', color: 'inherit' }}
+          />
         </ListItem>
       </List>
     </Drawer>
