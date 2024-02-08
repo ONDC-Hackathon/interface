@@ -81,7 +81,7 @@ const Header = () => {
     }
 
     return (
-        <AppBar position="static" className="bg-white shadow-ultra-light pt">
+        <AppBar position="sticky" className="bg-white shadow-ultra-light pt">
             <Toolbar className="justify-between bg-white">
                 <Search className="bg-gray-200">
                     <SearchIconWrapper>
