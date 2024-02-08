@@ -1,9 +1,16 @@
 import React from 'react'
-import Sidebar from '../Components/Sidebar'
+import Sidebar from '../Components/Sidebar';
+import { Typography } from '@mui/material';
+import Topbar from '../Components/Topbar';
 
 function Dashboard() {
+
   return (
-    <Sidebar />
+    <>
+    <Sidebar >
+      <h1>This is sample child</h1>
+    </Sidebar>
+    </>
   )
 }
 
