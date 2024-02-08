@@ -13,8 +13,8 @@ const ProtectedLayout = () => {
             <div className="flex flex-col w-full">
                 <Header />
                 <main
-                    className="content pt-10 overflow-hidden"
-                    style={{ backgroundColor: theme.palette.secondary.light }}
+                    className="content pt-10 overflow-hidden flex justify-center"
+                    style={{ flexGrow: 1, backgroundColor: theme.palette.secondary.light }}
                 >
                     <Outlet />
                 </main>
