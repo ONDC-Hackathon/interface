@@ -7,6 +7,7 @@ import {
   StepConnector,
   stepConnectorClasses,
   styled,
+  Typography,
 } from '@mui/material'
 
 import AddBasicInfo from '../Components/AddBasicInfo'
@@ -32,6 +33,10 @@ const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
     backgroundColor: '#eaeaf0',
     borderRadius: 1,
   },
+}))
+
+const SaveNextBtn = styled(Button)(({ theme }) => ({
+  backgroundColor: theme.palette.common.green
 }))
 
 const steps = [
@@ -81,6 +86,9 @@ function AddProduct() {
 
   return (
     <div className="flex flex-col p-2">
+      <Typography variant="h4" component="h1" className="mb-4">
+        Add Product
+      </Typography>
       <div className="mb-6">
         <Stepper
           alternativeLabel
@@ -108,11 +116,19 @@ function AddProduct() {
       <ActiveTab activeStep={activeStep} />
       <div className="flex justify-end space-x-4">
         {activeStep !== steps.length - 1 && (
-          <Button variant="outlined" color="primary">
+          <Button variant="outlined" sx={{
+            borderRadius: '15px',
+            fontWeight: '900',
+            borderWidth: '2px'
+          }} color="success">
             Save
           </Button>
         )}
-        <Button variant="contained" color="primary" onClick={handleNext}>
+        <Button variant="contained" color="success" sx={{
+          color: 'white !important',
+          borderRadius: '15px',
+          fontWeight: '900'
+        }} onClick={handleNext}>
           {activeStep !== steps.length - 1 ? 'Save & Next' : 'Submit'}
         </Button>
       </div>

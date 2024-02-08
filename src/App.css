@@ -2,6 +2,12 @@
   --blue: #1746a2;
   --bg-grey: #f7fbff;
 }
+
+.css-wtpjax-MuiStepConnector-root .MuiStepConnector-line {
+  height: 0px !important;
+  border: 3px dashed var(--bg-grey) !important;
+}
+
 .App {
   text-align: center;
 }
@@ -10,7 +16,8 @@
   height: 40vmin;
   pointer-events: none;
 }
-.Mui-selected{
+
+.Mui-selected {
   color: white !important;
   font-weight: 900 !important;
 }
@@ -40,6 +47,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }

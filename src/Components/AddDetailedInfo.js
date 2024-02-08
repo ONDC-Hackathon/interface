@@ -59,7 +59,7 @@ function AddDetailedInfo() {
   }
 
   return (
-    <Grid container style={{ minHeight: '100vh' }} spacing={4}>
+    <Grid container sx={{ minHeight: '100vh', padding: '20px' }} spacing={4}>
       <Grid item xs={8}>
         <Box sx={{ width: '100%' }}>
           <Card

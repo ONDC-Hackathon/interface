@@ -21,9 +21,9 @@ const useDynamicTitleStyles = () => {
     return pathSegments.length === 0
       ? 'Dashboard'
       : pathSegments[pathSegments.length - 1]
-          .replace(/-/g, ' ')
-          .replace(/:/g, '')
-          .replace(/\b\w/g, (char) => char.toUpperCase())
+        .replace(/-/g, ' ')
+        .replace(/:/g, '')
+        .replace(/\b\w/g, (char) => char.toUpperCase())
   }
   const title = React.useMemo(() => getTitle(location.pathname), [location])
   return title
@@ -115,15 +115,6 @@ const Header = () => {
           </IconButton>
         </div>
       </Toolbar>
-      <div className="flex items-center justify-start pl-6 bg-white">
-        <Typography
-          variant="h5"
-          component="div"
-          className="text-black font-bold"
-        >
-          {title}
-        </Typography>
-      </div>
     </AppBar>
   )
 }
