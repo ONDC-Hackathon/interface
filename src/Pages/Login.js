@@ -19,6 +19,7 @@ import { loginSeller } from '../Redux/services/auth.service';
 import incartLogo from '../Images/incart_logo.png'
 
 function Login() {
+
   const { loading, userInfo, error } = useSelector((state) => state.auth)
 
   const dispatch = useDispatch()

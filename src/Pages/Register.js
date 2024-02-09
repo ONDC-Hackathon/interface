@@ -28,7 +28,6 @@ function Register() {
     const handleLogin = useCallback(() => {
         navigate('/login')
     })
-
     const [step, setStep] = useState(0)
 
     const [user, setUser] = useState({

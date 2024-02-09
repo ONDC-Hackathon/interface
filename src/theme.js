@@ -6,8 +6,11 @@ const theme = createTheme({
     },
     common: {
       greybg: '#aaaaaa',
-      green: '#4bb543'
     },
+  },
+  common: {
+    greybg: '#aaaaaa',
+    green: '#4bb543',
   },
   typography: {
     fontFamily: [
