@@ -15,7 +15,7 @@ import cost from '../Images/Login/zero_cost.svg'
 import Benefits from '../Components/Benefits'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { loginSeller } from '../Redux/services/auth.service';
+import { loginSeller } from '../Redux/services/auth.service'
 import incartLogo from '../Images/incart_logo.png'
 
 function Register() {
@@ -50,20 +50,45 @@ function Register() {
   return (
     <div className="relative">
       <Grid style={{ minHeight: '100vh' }} container spacing={0}>
-        <Grid className='flex flex-col' sx={{ backgroundColor: '#1746A2', padding: '3rem' }} xs={6}>
-          <div style={{ paddingBottom: '3rem' }} className='flex flex-col'>
+        <Grid
+          className="flex flex-col"
+          sx={{ backgroundColor: '#1746A2', padding: '3rem' }}
+          xs={6}
+        >
+          <div style={{ paddingBottom: '3rem' }} className="flex flex-col">
             <img src={incartLogo} style={{ maxWidth: '300px' }} alt="" />
-            <Typography variant="p" sx={{
-              color: '#aaaaaa',
-            }} align='left' className="font-bold py-4">
+            <Typography
+              variant="p"
+              sx={{
+                color: '#aaaaaa',
+              }}
+              align="left"
+              className="font-bold py-4"
+            >
               Grow your business with new customers on INCART network
             </Typography>
           </div>
           <div style={{ zIndex: '10' }}>
-            <Benefits icon={buyers} heading={"More Buyers"} desc="Access to the entire buyer universe" />
-            <Benefits icon={cost} heading={"Zero Cost"} desc="No upfront cost to get started" />
-            <Benefits icon={ease} heading={"Easy to Use"} desc="Start selling in no time" />
-            <Benefits icon={grow} heading={"Grow Your Business"} desc="Promote your business with your own webpage" />
+            <Benefits
+              icon={buyers}
+              heading={'More Buyers'}
+              desc="Access to the entire buyer universe"
+            />
+            <Benefits
+              icon={cost}
+              heading={'Zero Cost'}
+              desc="No upfront cost to get started"
+            />
+            <Benefits
+              icon={ease}
+              heading={'Easy to Use'}
+              desc="Start selling in no time"
+            />
+            <Benefits
+              icon={grow}
+              heading={'Grow Your Business'}
+              desc="Promote your business with your own webpage"
+            />
           </div>
         </Grid>
         <Grid className="relative" xs={6}>

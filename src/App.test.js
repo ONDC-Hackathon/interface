@@ -1,4 +1,5 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, test } from '@testing-library/react'
+import { expect } from '@jest/globals'
 import App from './App'
 
 test('renders learn react link', () => {
