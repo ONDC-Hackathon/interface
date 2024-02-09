@@ -6,7 +6,7 @@ import {
   Navigate,
   Outlet,
 } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Login from './Pages/Login'
 import Register from './Pages/Register'
 import Dashboard from './Pages/Dashboard'
@@ -18,6 +18,9 @@ import NotFound from './Pages/NotFound'
 import ProtectedLayout from './Components/ProtectedLayout'
 import { ThemeProvider } from '@mui/material/styles'
 import theme from './Components/theme'
+import { getCategories } from './Redux/services/category.service'
+import { getSubCategories } from './Redux/services/subCategory.service'
+import { getVariants } from './Redux/services/variant.service'
 
 const ProtectedRoute = () => {
   const { userToken } = useSelector((state) => state.auth)
@@ -25,6 +28,12 @@ const ProtectedRoute = () => {
 }
 
 function App() {
+
+  const dispatch = useDispatch()
+  dispatch(getCategories({}))
+  dispatch(getSubCategories({}))
+  dispatch(getVariants({}))
+  
   return (
     <ThemeProvider theme={theme}>
       <div className="App">

@@ -40,9 +40,7 @@ function Login() {
   };
 
   const handleSubmit = async () => {
-    const res = await dispatch(loginSeller(user))
-    console.log(res.payload.token)
-    localStorage.setItem('userToken', res.payload.token)
+    await dispatch(loginSeller(user))
     navigate("/")
   }
 
@@ -89,22 +87,22 @@ function Login() {
                   Welcome to Incart
                 </Typography>
                 <Typography>
-                    Login to your account and start selling on Incart
+                  Login to your account and start selling on Incart
                 </Typography>
-                
-                  <>
-                    <Input
-                      label="Username"
-                      type="text"
-                      value={user.username}
-                      onChange={username => handleUserChange({ target: { name: 'username', value: username } })}
-                    />
-                    <Input
-                      label="Password"
-                      type="password"
-                      value={user.password}
-                      onChange={password => handleUserChange({ target: { name: 'password', value: password } })}
-                    />
+
+                <>
+                  <Input
+                    label="Username"
+                    type="text"
+                    value={user.username}
+                    onChange={username => handleUserChange({ target: { name: 'username', value: username } })}
+                  />
+                  <Input
+                    label="Password"
+                    type="password"
+                    value={user.password}
+                    onChange={password => handleUserChange({ target: { name: 'password', value: password } })}
+                  />
                   <div className="flex flex-col">
                     <Button variant="contained" color="primary" onClick={handleSubmit}>
                       Submit
@@ -112,9 +110,9 @@ function Login() {
                     <div>
                       Don't have an account? <Link to="/register">Register</Link>
                     </div>
-                    
+
                   </div>
-                  </>
+                </>
               </CardContent>
             </Card>
           </Box>
