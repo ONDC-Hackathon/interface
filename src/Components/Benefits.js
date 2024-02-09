@@ -9,11 +9,11 @@ function Benefits(props) {
       container
       spacing={2}
     >
-      <Grid className="" xs={2}>
+      <Grid className="">
         {' '}
-        <img src={props.icon} alt="" />{' '}
+        <img src={props.icon} style={{ width: '30px' }} alt="" />{' '}
       </Grid>
-      <Grid xs={10}>
+      <Grid>
         <h1 className="font-extrabold">{props.heading}</h1>
         <p style={{ fontSize: '0.7rem' }}>{props.desc}</p>
       </Grid>
