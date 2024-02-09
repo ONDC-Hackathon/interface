@@ -28,7 +28,7 @@ function Product() {
     padding: '1rem',
     marginBottom: '2.5rem',
   }));
-
+  const mainImg = [prodimg, prodimg, prodimg, prodimg]
   const images = [img1, img2, img3, img4];
   const colors = [{
     color: 'Navy Blue',
@@ -75,7 +75,7 @@ function Product() {
       <Paper elevation={0} sx={{ width: '100%', padding: '2rem' }}>
         <Grid container spacing={1}>
           <Grid xs={5}>
-            <ProductImages mainImg={prodimg} images={images} />
+            <ProductImages mainImg={mainImg} images={images} />
           </Grid>
           <Grid xs={7}>
             <BasicProductDetails StyledBox={StyledBox} />
