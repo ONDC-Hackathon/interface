@@ -28,14 +28,14 @@ export const loginSeller = createAsyncThunk(
 
 export const registerSeller = createAsyncThunk(
   'auth/register',
-  async ({ email, password }, { rejectWithValue }) => {
+  async ({ user, seller }, { rejectWithValue }) => {
     try {
       const config = {
         headers: {
           'Content-Type': 'application/json',
         },
       }
-      await client.post(`/seller/add/`, { email, password }, config)
+      await client.post(`users/seller/add/`, { user, seller }, config)
     } catch (error) {
       if (error.response && error.response.data.message) {
         return rejectWithValue(error.response.data.message)
