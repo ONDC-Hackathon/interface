@@ -99,33 +99,51 @@ function AddDetailedInfo() {
             className="shadow-none bg-white"
             style={{ marginBottom: '30px', borderRadius: '0px' }}
           >
-            <CardContent style={{ padding: '3rem', borderRadius: '10px' }}>
+            <CardContent style={{ padding: '0rem 1rem 1rem 1rem', borderRadius: '10px' }}>
               <Typography
                 className="font-bold text-left py-4"
                 variant="h6"
                 component="h6"
+                sx={{
+                  color: '#11419E',
+                }}
               >
                 Instructions
               </Typography>
-              <Typography className="text-left py-4" variant="body1">
-                {`Enhance your product listing by providing clear and comprehensive details.
-                                \n\nAdd these recommended parameters based on your product's category and subcategory to make your listing stand out:`}
+              <Typography className="text-left py-4" sx={{
+                color: '#777777',
+                fontSize: '16px'
+              }} variant="body1">
+                Enhance your product listing by providing clear and comprehensive details.
               </Typography>
-              <FormGroup>
-                {options.map((option) => (
-                  <FormControlLabel
-                    key={option}
-                    control={
-                      <Checkbox
-                        checked={selectedOptions[option]}
-                        onChange={handleCheckboxChange}
-                        name={option}
-                      />
-                    }
-                    label={option}
-                  />
-                ))}
-              </FormGroup>
+              <Typography align='left' paragraph={true} sx={{
+                fontSize: '16px',
+              }}>
+                Add these recommended parameters based on your product's category and subcategory to make your listing stand out:
+              </Typography>
+              <Box sx={{
+                padding: '1rem',
+                border: '2px solid #dddddd',
+              }}>
+                <FormGroup>
+                  {options.map((option) => (
+                    <FormControlLabel
+                      key={option}
+                      sx={{
+                        fontSize: '14px !important',
+                      }}
+                      control={
+                        <Checkbox
+                          checked={selectedOptions[option]}
+                          onChange={handleCheckboxChange}
+                          name={option}
+                        />
+                      }
+                      label={option}
+                    />
+                  ))}
+                </FormGroup>
+              </Box>
             </CardContent>
           </Card>
         </Box>
