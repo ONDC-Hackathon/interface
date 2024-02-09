@@ -28,7 +28,7 @@ const ProductCard = ({ product, onDelete, onEdit, onClick }) => {
         >
             <Box sx={{ flex: 3, marginRight: '10px', textAlign: 'start' }} onClick={onClick}>
                 <Typography variant="h6" component="div">
-                    {product.name}
+                    {product.title}
                 </Typography>
                 <Typography variant="subtitle1" color="text.secondary">
                     Category: {product.category}
@@ -38,15 +38,15 @@ const ProductCard = ({ product, onDelete, onEdit, onClick }) => {
                 <Typography variant="subtitle1">₹ {product.price}</Typography>
             </Box>
             <Box sx={{ flex: 1, marginRight: '10px', textAlign: 'start' }}>
-                <Typography variant="subtitle1">{product.stock}</Typography>
+                <Typography variant="subtitle1">{product.available_stock}</Typography>
             </Box>
             <Box sx={{ flex: 1, marginRight: '10px', textAlign: 'start' }}>
-                <Typography variant="subtitle1">{product.orders}</Typography>
+                <Typography variant="subtitle1">{product.discount}</Typography>
             </Box>
             <Box sx={{ flex: 1, marginRight: '10px', textAlign: 'start' }}>
-                <Typography variant="subtitle1">{new Date(product.publishedOn).toLocaleDateString()}</Typography>
+                <Typography variant="subtitle1">{new Date(product.created_at).toLocaleDateString()}</Typography>
                 <Typography variant="body2" color="text.secondary">
-                    {new Date(product.publishedOn).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                    {new Date(product.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                 </Typography>
             </Box>
             <Box sx={{ flex: 1 }}>
