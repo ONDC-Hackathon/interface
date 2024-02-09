@@ -1,17 +1,16 @@
 import React, { useState } from 'react';
-import Sidebar from '../Components/Sidebar';
 import { Box, Typography, Button } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import user from '../Images/user.png';
-import DashSummary from '../Components/DashSummary';
-import RecentOrders from '../Components/RecentOrders';
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
-import CategorySales from '../Components/CategorySales';
-import BestSellers from '../Components/BestSellers';
-import SalesbyLoc from '../Components/SalesbyLoc';
+import DashSummary from '../Components/Dashboard/DashSummary';
+import RecentOrders from '../Components/Dashboard/RecentOrders';
+import CategorySales from '../Components/Dashboard/CategorySales';
+import BestSellers from '../Components/Dashboard/BestSellers';
+import SalesbyLoc from '../Components/Dashboard/SalesbyLoc';
 
 
 function Dashboard() {
@@ -23,6 +22,11 @@ function Dashboard() {
     { location: 'Delhi', progress: 60 },
     { location: 'Kolkata', progress: 66 },
   ]
+  const categorySales = [
+    { id: 0, value: 45, label: 'Fashion' },
+    { id: 1, value: 35, label: 'Grocery' },
+    { id: 2, value: 20, label: 'Furniture' },
+  ];
   return (
     <Box padding={'1rem'} width={'100%'}>
       <div className='w-100 flex flex-row justify-between'>
@@ -48,12 +52,12 @@ function Dashboard() {
         </div>
       </div>
       <DashSummary />
-      <Grid container spacing={2}>
+      <Grid sx={{ marginTop: '1rem' }} container spacing={2}>
         <Grid xs={8}><RecentOrders /></Grid>
         <Grid xs={4}> <SalesbyLoc orders={orderLoc} /> </Grid>
       </Grid>
-      <Grid container spacing={2}>
-        <Grid xs={5}><CategorySales /></Grid>
+      <Grid sx={{ marginTop: '1rem' }} container spacing={2}>
+        <Grid xs={5}><CategorySales data={categorySales} /></Grid>
         <Grid xs={7}><BestSellers /></Grid>
       </Grid>
 
