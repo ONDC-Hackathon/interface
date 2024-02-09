@@ -3,6 +3,7 @@ import authReducer from './features/auth.slice'
 import categoryReducer from './features/category.slice'
 import subCategoryReducer from './features/subCategory.slice'
 import variantReducer from './features/variant.slice'
+import productReducer from './features/product.slice'
 
 
 const store = configureStore({
@@ -10,7 +11,8 @@ const store = configureStore({
     auth: authReducer,
     category: categoryReducer,
     subCategory: subCategoryReducer,
-    variant: variantReducer
+    variant: variantReducer,
+    product: productReducer
   },
 })
 export default store
