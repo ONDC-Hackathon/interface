@@ -2,10 +2,13 @@
 import React from 'react'
 import { Card, Typography, IconButton, Menu, MenuItem, Box } from '@mui/material'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
+import { useDispatch, useSelector } from 'react-redux'
 
 const ProductCard = ({ product, onDelete, onEdit, onClick }) => {
     const [anchorEl, setAnchorEl] = React.useState(null)
     const open = Boolean(anchorEl)
+
+    const { loading, categories, error } = useSelector((state) => state.category)
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget)
@@ -31,7 +34,7 @@ const ProductCard = ({ product, onDelete, onEdit, onClick }) => {
                     {product.title}
                 </Typography>
                 <Typography variant="subtitle1" color="text.secondary">
-                    Category: {product.category}
+                    Category: {categories.find(category => category.id===product.category).title}
                 </Typography>
             </Box>
             <Box sx={{ flex: 1, marginRight: '10px', textAlign: 'start' }}>
