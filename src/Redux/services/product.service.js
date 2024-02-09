@@ -25,3 +25,26 @@ export const getProducts = createAsyncThunk(
         }
     },
 )
+
+export const addProduct = createAsyncThunk(
+    'catalogue/product/add/',
+    async ( data, { getState, rejectWithValue }) => {
+        const { auth } = getState();
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${auth.userToken}`
+                },
+            }
+            const res = await client.post(`catalogue/product/add/`, data, config)
+            return res
+        } catch (error) {
+            if (error.response && error.response.data.message) {
+                return rejectWithValue(error.response.data.message)
+            } else {
+                return rejectWithValue(error.message)
+            }
+        }
+    },
+)

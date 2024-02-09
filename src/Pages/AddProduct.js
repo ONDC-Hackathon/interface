@@ -47,20 +47,20 @@ const steps = [
   'Review',
 ]
 
-const ActiveTab = ({ activeStep }) => {
+const ActiveTab = ({ steps, activeStep, setActiveStep , handleNext}) => {
   switch (activeStep) {
     case 0:
-      return <AddBasicInfo />
+      return <AddBasicInfo steps={steps} activeStep={activeStep} setActiveStep={setActiveStep} handleNext={handleNext} />
     case 1:
-      return <AddDetailedInfo />
+      return <AddDetailedInfo steps={steps} activeStep={activeStep} setActiveStep={setActiveStep} handleNext={handleNext} />
     case 2:
-      return <AddImages />
+      return <AddImages steps={steps} activeStep={activeStep} setActiveStep={setActiveStep} handleNext={handleNext} />
     case 3:
-      return <AddCompliances />
+      return <AddCompliances steps={steps} activeStep={activeStep} setActiveStep={setActiveStep} handleNext={handleNext} />
     case 4:
-      return <Review />
+      return <Review steps={steps} activeStep={activeStep} setActiveStep={setActiveStep} handleNext={handleNext} />
     default:
-      return <AddBasicInfo />
+      return <AddBasicInfo steps={steps} activeStep={activeStep} setActiveStep={setActiveStep} handleNext={handleNext} />
   }
 }
 
@@ -113,25 +113,7 @@ function AddProduct() {
           ))}
         </Stepper>
       </div>
-      <ActiveTab activeStep={activeStep} />
-      <div className="flex justify-end space-x-4">
-        {activeStep !== steps.length - 1 && (
-          <Button variant="outlined" sx={{
-            borderRadius: '15px',
-            fontWeight: '900',
-            borderWidth: '2px'
-          }} color="success">
-            Save
-          </Button>
-        )}
-        <Button variant="contained" color="success" sx={{
-          color: 'white !important',
-          borderRadius: '15px',
-          fontWeight: '900'
-        }} onClick={handleNext}>
-          {activeStep !== steps.length - 1 ? 'Save & Next' : 'Submit'}
-        </Button>
-      </div>
+      <ActiveTab steps={steps} activeStep={activeStep} setActiveStep={setActiveStep} handleNext={handleNext}/>
     </div>
   )
 }
