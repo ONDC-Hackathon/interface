@@ -3,7 +3,7 @@ import { loginSeller } from '../services/auth.service'
 
 const userToken = localStorage.getItem('userToken')
   ? localStorage.getItem('userToken')
-  : 'null-usertoken-just-for-testing'
+  : null
 
 const initialState = {
   loading: false,
