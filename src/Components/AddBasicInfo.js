@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Grid from '@mui/material/Unstable_Grid2'
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
@@ -13,28 +13,45 @@ import {
 } from '@mui/material'
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
+import { useSelector } from 'react-redux'
 
 function AddBasicInfo() {
+
+  const { categories } = useSelector((state) => state.category)
+  const { subCategories } = useSelector((state) => state.subCategory)
+  const { variants } = useSelector((state) => state.variant)
+  const [subCategoryList, setSubCategoryList] = useState([])
+  const [variantList, setVariantList] = useState([])
+
   const [product, setProduct] = useState({
     title: '',
-    description: '',
-    manufacturer: '',
     brand: '',
-    originalPrice: '',
+    price: '',
     discount: '',
-    category: 'Electronics',
-    subCategory: 'Watch',
-    variant: 'Smart Watch',
-    stock: '',
+    category: '',
+    sub_category: '',
+    variant: '',
+    available_stock: '',
+    tax: '',
+    about: '',
+    manufacturer: ''
   })
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    console.log('Form submitted')
+    console.log('data: ', product)
   }
 
   const handleChange = (e, param) => {
     setProduct({ ...product, [param]: e.target.value })
+    if(param==='category'){
+      const data = subCategories.filter((subCategory) => subCategory.category===e.target.value)
+      setSubCategoryList(data)
+    }
+    if (param ==='sub_category'){
+      const data = variants.filter((variant) => variant.sub_category === e.target.value)
+      setVariantList(data)
+    }
   }
 
   return (
@@ -59,15 +76,13 @@ function AddBasicInfo() {
                     htmlFor="productDescription"
                     className="block mb-2 text-sm font-medium text-gray-900"
                   >
-                    Product Description
+                    Product About
                   </label>
                   <ReactQuill
                     id="productDescription"
                     theme="snow"
-                    value={product.description}
-                    onChange={(content) =>
-                      setProduct({ ...product, description: content })
-                    }
+                    value={product.about}
+                    onChange={(e) => handleChange({ target: { value: e } }, 'about')}
                   />
                 </div>
               </form>
@@ -101,18 +116,25 @@ function AddBasicInfo() {
                   onChange={(e) => handleChange(e, 'brand')}
                 />
                 <TextField
-                  label="Original Price"
+                  label="Price"
                   variant="outlined"
                   fullWidth
-                  value={product.originalPrice}
-                  onChange={(e) => handleChange(e, 'originalPrice')}
+                  value={product.price}
+                  onChange={(e) => handleChange(e, 'price')}
                 />
                 <TextField
-                  label="Discounts/Offers"
+                  label="Discount"
                   variant="outlined"
                   fullWidth
                   value={product.discount}
                   onChange={(e) => handleChange(e, 'discount')}
+                />
+                <TextField
+                  label="Tax"
+                  variant="outlined"
+                  fullWidth
+                  value={product.tax}
+                  onChange={(e) => handleChange(e, 'tax')}
                 />
               </form>
             </CardContent>
@@ -145,19 +167,21 @@ function AddBasicInfo() {
                     label="Category"
                     onChange={(e) => handleChange(e, 'category')}
                   >
-                    <MenuItem value="Electronics">Electronics</MenuItem>
-                    {/* Add other categories here */}
+                    {categories.length !== 0 && categories.map((category) => 
+                      (<MenuItem value={category.id}>{category.title}</MenuItem>)
+                    )}
                   </Select>
                 </FormControl>
                 <FormControl sx={{ marginBottom: '10px' }}>
                   <InputLabel>Sub Category</InputLabel>
                   <Select
-                    value={product.subCategory}
+                    value={product.sub_category}
                     label="Sub Category"
-                    onChange={(e) => handleChange(e, 'subCategory')}
+                    onChange={(e) => handleChange(e, 'sub_category')}
                   >
-                    <MenuItem value="Watch">Watch</MenuItem>
-                    {/* Add other sub-categories here */}
+                    {subCategoryList.length !== 0 && subCategoryList.map((subCategory) => (
+                      <MenuItem value={subCategory.id}>{subCategory.title}</MenuItem>
+                    ))}
                   </Select>
                 </FormControl>
                 <FormControl sx={{ marginBottom: '10px' }}>
@@ -167,8 +191,9 @@ function AddBasicInfo() {
                     label="Variant"
                     onChange={(e) => handleChange(e, 'variant')}
                   >
-                    <MenuItem value="Smart Watch">Smart Watch</MenuItem>
-                    {/* Add other variants here */}
+                    {variantList.length !== 0 && variantList.map((variant) => (
+                      <MenuItem value={variant.id}>{variant.title}</MenuItem>
+                    ))}
                   </Select>
                 </FormControl>
               </form>
@@ -192,8 +217,8 @@ function AddBasicInfo() {
                   variant="outlined"
                   fullWidth
                   type="number"
-                  value={product.stock}
-                  onChange={(e) => handleChange(e, 'stock')}
+                  value={product.available_stock}
+                  onChange={(e) => handleChange(e, 'available_stock')}
                 />
               </form>
             </CardContent>
