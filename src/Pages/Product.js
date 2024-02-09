@@ -43,7 +43,22 @@ function Product() {
     img: color3,
     code: '#4C4849'
   }];
-  const size = ['6 UK', '7 UK', '8 UK', '9 UK', '10 UK', '11 UK', '12 UK']
+  const size = ['6 UK', '7 UK', '8 UK', '9 UK', '10 UK', '11 UK', '12 UK'];
+
+  const features = [
+    "Sole: Rubber",
+    "Sole: Rubber",
+    "Sole: Rubber",
+    "Sole: Rubber",
+    "Sole: Rubber",
+    "Sole: Rubber",
+  ];
+
+  const services = [
+    "10 day returs(Restrictions)",
+    "10 day returs(Restrictions)",
+    "10 day returs(Restrictions)",
+  ]
 
   const productDetails = [
     { name: 'Category', value: 'Shoes' },
@@ -65,7 +80,7 @@ function Product() {
           <Grid xs={7}>
             <BasicProductDetails StyledBox={StyledBox} />
             <ColorandSize StyledBox={StyledBox} colors={colors} size={size} />
-            <ProductDescFeatures StyledBox={StyledBox} />
+            <ProductDescFeatures StyledBox={StyledBox} features={features} services={services} />
             <ProductDetails StyledBox={StyledBox} productDetails={productDetails} />
           </Grid>
         </Grid>
