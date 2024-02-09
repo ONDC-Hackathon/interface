@@ -248,10 +248,11 @@ function AddBasicInfo({ steps, activeStep, setActiveStep, handleNext }) {
           color: 'white !important',
           borderRadius: '15px',
           fontWeight: '900'
-        }} onClick={() => {
-          handleSubmit()
-          handleNext()
-        }}>
+        }}
+          onClick={(e) => {
+            handleSubmit(e)
+            handleNext(e)
+          }}>
           {activeStep !== steps.length - 1 ? 'Save & Next' : 'Submit'}
         </Button>
       </div>

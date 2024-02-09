@@ -9,19 +9,21 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import TextField from '@mui/material/TextField'
 import FormGroup from '@mui/material/FormGroup'
 import Button from '@mui/material/Button'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { getAttributes } from '../Redux/services/attribute.service'
+import { addProductAttribute } from '../Redux/services/product.service'
 
 function AddDetailedInfo({ steps, activeStep, setActiveStep, handleNext }) {
 
   const dispatch = useDispatch()
+  const { product } = useSelector(state => state.product)
 
   const [options, setOptions] = useState([])
   const [selectedOptions, setSelectedOptions] = useState({})
   const [inputValues, setInputValues] = useState({})
 
   const fetchOptions = async () => {
-    const res = await dispatch(getAttributes({ category: 2, sub_category: 7, variant: 21 }))
+    const res = await dispatch(getAttributes({ category: product.category, sub_category: product.sub_category, variant: product.variant }))
     const data = res.payload.data
     setOptions(data)
     const initialSelectedOptions = {}
@@ -52,9 +54,9 @@ function AddDetailedInfo({ steps, activeStep, setActiveStep, handleNext }) {
     setInputValues({ ...inputValues, [name]: value })
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
-    console.log('Form submitted', inputValues)
+    const res = await dispatch(addProductAttribute({ product_id: product.id, attributes: inputValues }))
   }
 
   return (
@@ -75,7 +77,7 @@ function AddDetailedInfo({ steps, activeStep, setActiveStep, handleNext }) {
                   More Info
                 </Typography>
                 <form onSubmit={handleSubmit}>
-                  {options.map((option) =>
+                  {options.length !== 0 && options.map((option) =>
                     selectedOptions[option.id] ? (
                       <TextField
                         key={option.id}
@@ -127,7 +129,7 @@ function AddDetailedInfo({ steps, activeStep, setActiveStep, handleNext }) {
                   border: '2px solid #dddddd',
                 }}>
                   <FormGroup>
-                    {options.map((option) => (
+                    {options.length !== 0 && options.map((option) => (
                       <FormControlLabel
                         key={option.id}
                         sx={{
@@ -160,7 +162,10 @@ function AddDetailedInfo({ steps, activeStep, setActiveStep, handleNext }) {
             borderRadius: '15px',
             fontWeight: '900',
             borderWidth: '2px'
-          }} color="success">
+          }}
+            color="success"
+            onClick={handleSubmit}
+          >
             Save
           </Button>
         )}
@@ -168,7 +173,11 @@ function AddDetailedInfo({ steps, activeStep, setActiveStep, handleNext }) {
           color: 'white !important',
           borderRadius: '15px',
           fontWeight: '900'
-        }} onClick={handleNext}>
+        }}
+          onClick={(e) => {
+            handleSubmit(e)
+            handleNext(e)
+          }}>
           {activeStep !== steps.length - 1 ? 'Save & Next' : 'Submit'}
         </Button>
       </div>
