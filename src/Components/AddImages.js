@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import AddIcon from '@mui/icons-material/Add'
+import { List, ListItem } from '@mui/material'
 
 const imagePrompts = [
   'Upload product front view',
@@ -127,24 +128,30 @@ function AddImages() {
             className="shadow-none bg-white"
             style={{ marginBottom: '30px', borderRadius: '0px' }}
           >
-            <CardContent style={{ padding: '3rem', borderRadius: '10px' }}>
+            <CardContent style={{ padding: '3rem', borderRadius: '10px', paddingTop: '0' }}>
               <Typography
                 className="font-bold text-left py-4"
                 variant="h6"
                 component="h6"
+                sx={{
+                  color: '#11419E',
+                }}
               >
                 Instructions
               </Typography>
-              <Typography className="text-left py-4" variant="body1">
-                {`Upload a minimum of six high-quality images for each product listing.
-Include images from various angles to provide a comprehensive view of the product.
-Ensure images are well-lit, clear, and of high resolution for optimal presentation.
-Showcase the product in use, its packaging, and any special features or accessories.
-Maintain consistency in background, lighting, and styling for a professional appearance.
-Avoid over-editing or misleading enhancements that may misrepresent the product.
-High-quality images increase buyer interest and improve sales potential.
-
-Note: Products with six or more high-quality images are more likely to attract buyers and result in successful sales. Please adhere to these guidelines to optimize your product listings.`}
+              <Typography className="py-4" align='justify' variant="p">
+                <List sx={{ listStyleType: 'disc' }}>
+                  <ListItem sx={{ display: 'list-item', fontSize: '15px' }}>Upload a minimum of six high-quality images for each product listing.</ListItem>
+                  <ListItem sx={{ display: 'list-item', fontSize: '15px' }}>Include images from various angles to provide a comprehensive view of the product.</ListItem>
+                  <ListItem sx={{ display: 'list-item', fontSize: '15px' }}>Ensure images are well-lit, clear, and of high resolution for optimal presentation.</ListItem>
+                  <ListItem sx={{ display: 'list-item', fontSize: '15px' }}>Showcase the product in use, its packaging, and any special features or accessories.</ListItem>
+                  <ListItem sx={{ display: 'list-item', fontSize: '15px' }}>Maintain consistency in background, lighting, and styling for a professional appearance.</ListItem>
+                  <ListItem sx={{ display: 'list-item', fontSize: '15px' }}>Avoid over-editing or misleading enhancements that may misrepresent the product.</ListItem>
+                  <ListItem sx={{ display: 'list-item', fontSize: '15px' }}>High-quality images increase buyer interest and improve sales potential.</ListItem>
+                </List>
+              </Typography>
+              <Typography align='left' variant='h6' sx={{ fontSize: '14px', textAlign: 'left', color: '#4BB543' }}>
+                <span style={{ color: 'black' }}>Note:</span>  Products with six or more high-quality images are more likely to attract buyers and result in successful sales. Please adhere to these guidelines to optimize your product listings.
               </Typography>
             </CardContent>
           </Card>

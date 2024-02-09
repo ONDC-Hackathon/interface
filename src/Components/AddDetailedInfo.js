@@ -130,13 +130,16 @@ function AddDetailedInfo() {
                     <FormControlLabel
                       key={option}
                       sx={{
-                        fontSize: '14px !important',
+                        '& .MuiFormControlLabel-label': {
+                          fontSize: '16px',
+                        }
                       }}
                       control={
                         <Checkbox
                           checked={selectedOptions[option]}
                           onChange={handleCheckboxChange}
                           name={option}
+                          color='secondary'
                         />
                       }
                       label={option}
