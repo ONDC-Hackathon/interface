@@ -2,7 +2,7 @@ import client from './index'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 
 export const getProducts = createAsyncThunk(
-  'catalogue/product',
+  'catalogue/products',
   async ({}, { getState, rejectWithValue }) => {
     const { auth } = getState()
     try {
@@ -103,7 +103,6 @@ export const addProductAttribute = createAsyncThunk(
 export const addProductImage = createAsyncThunk(
   'catalogue/product_image/add/',
   async ({ product_id, images }, { getState, rejectWithValue }) => {
-    console.log({ product_id, images })
     const { auth } = getState()
     try {
       const config = {
@@ -115,6 +114,58 @@ export const addProductImage = createAsyncThunk(
       const res = await client.post(
         `catalogue/product_image/add/`,
         { product_id, images },
+        config,
+      )
+      return res
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message)
+      } else {
+        return rejectWithValue(error.message)
+      }
+    }
+  },
+)
+
+export const evaluateScore = createAsyncThunk(
+  'catalogue/evaluate_score/',
+  async (pk, { getState, rejectWithValue }) => {
+    const { auth } = getState()
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${auth.userToken}`,
+        },
+      }
+      const res = await client.get(
+        `catalogue/evaluate_score/${pk}/`,
+        config,
+      )
+      return res
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message)
+      } else {
+        return rejectWithValue(error.message)
+      }
+    }
+  },
+)
+
+export const checkScore = createAsyncThunk(
+  'catalogue/check_score/',
+  async (pk, { getState, rejectWithValue }) => {
+    const { auth } = getState()
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${auth.userToken}`,
+        },
+      }
+      const res = await client.get(
+        `catalogue/check_score/${pk}/`,
         config,
       )
       return res
