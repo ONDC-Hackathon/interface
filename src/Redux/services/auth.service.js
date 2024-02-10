@@ -17,7 +17,7 @@ export const loginSeller = createAsyncThunk(
       )
       return data
     } catch (error) {
-      if (error.response && error.response.data.message) {
+      if (error.response?.data?.message) {
         return rejectWithValue(error.response.data.message)
       } else {
         return rejectWithValue(error.message)
@@ -37,7 +37,7 @@ export const registerSeller = createAsyncThunk(
       }
       await client.post(`users/seller/add/`, { user, seller }, config)
     } catch (error) {
-      if (error.response && error.response.data.message) {
+      if (error.response?.data?.message) {
         return rejectWithValue(error.response.data.message)
       } else {
         return rejectWithValue(error.message)

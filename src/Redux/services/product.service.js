@@ -17,7 +17,7 @@ export const getProducts = createAsyncThunk(
 
       return data
     } catch (error) {
-      if (error.response && error.response.data.message) {
+      if (error.response?.data?.message) {
         return rejectWithValue(error.response.data.message)
       } else {
         return rejectWithValue(error.message)
@@ -40,7 +40,7 @@ export const addProduct = createAsyncThunk(
       const res = await client.post(`catalogue/product/add/`, data, config)
       return res
     } catch (error) {
-      if (error.response && error.response.data.message) {
+      if (error.response?.data?.message) {
         return rejectWithValue(error.response.data.message)
       } else {
         return rejectWithValue(error.message)
@@ -68,7 +68,7 @@ export const addProductAttribute = createAsyncThunk(
       )
       return res
     } catch (error) {
-      if (error.response && error.response.data.message) {
+      if (error.response?.data?.message) {
         return rejectWithValue(error.response.data.message)
       } else {
         return rejectWithValue(error.message)

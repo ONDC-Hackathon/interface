@@ -6,6 +6,7 @@ import DeletePopup from '../Components/DeletePopup'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getProducts } from '../Redux/services/product.service'
+import { deleteProduct } from '../Redux/features/product.slice'
 
 const headerStyles = {
   display: 'flex',
@@ -39,16 +40,13 @@ const footerStyles = {
 const Products = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const { products } = useSelector((state) => state.product)
 
   const [searchQuery, setSearchQuery] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
-  const [products, setProducts] = useState([])
 
   const fetchProduct = async () => {
-    const res = await dispatch(getProducts({}))
-    const data = res.payload.data
-
-    setProducts(data)
+    await dispatch(getProducts({}))
   }
 
   useEffect(() => {
@@ -85,7 +83,7 @@ const Products = () => {
 
   const handleDeleteConfirm = () => {
     // Delete api call using dispatch
-    setProducts(products.filter((p) => p !== selectedProduct))
+    dispatch(deleteProduct(selectedProduct.id))
     setDeletePopupOpen(false)
   }
 
