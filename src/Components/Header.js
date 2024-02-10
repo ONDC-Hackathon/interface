@@ -21,9 +21,9 @@ const useDynamicTitleStyles = () => {
     return pathSegments.length === 0
       ? 'Dashboard'
       : pathSegments[pathSegments.length - 1]
-        .replace(/-/g, ' ')
-        .replace(/:/g, '')
-        .replace(/\b\w/g, (char) => char.toUpperCase())
+          .replace(/-/g, ' ')
+          .replace(/:/g, '')
+          .replace(/\b\w/g, (char) => char.toUpperCase())
   }
   const title = React.useMemo(() => getTitle(location.pathname), [location])
   return title

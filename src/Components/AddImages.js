@@ -8,17 +8,22 @@ import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import AddIcon from '@mui/icons-material/Add'
 import { List, ListItem } from '@mui/material'
+import { useDispatch, useSelector } from 'react-redux'
+import { addProductImage } from '../Redux/services/product.service'
 
 const imagePrompts = [
-  'Upload product front view',
-  'Upload product back view',
-  'Upload product side view',
-  'Upload product in use',
-  'Upload product packaging',
-  'Upload any additional image',
+  'Front view',
+  'Back view',
+  'Side view',
+  'In use',
+  'Package/Label',
+  'Additional',
 ]
 
 function AddImages({ steps, activeStep, setActiveStep, handleNext }) {
+  const dispatch = useDispatch()
+  const { product } = useSelector((state) => state.product)
+
   const [images, setImages] = useState([])
 
   const handleImageChange = (event, index) => {
@@ -27,7 +32,9 @@ function AddImages({ steps, activeStep, setActiveStep, handleNext }) {
       const updatedImages = [...images]
       updatedImages[index] = {
         ...updatedImages[index],
+        file: file,
         url: URL.createObjectURL(file),
+        alternate_text: imagePrompts[index],
       }
       setImages(updatedImages)
     }
@@ -45,7 +52,7 @@ function AddImages({ steps, activeStep, setActiveStep, handleNext }) {
   const handleAddImageClick = (index) => {
     const updatedImages = [...images]
     if (!updatedImages[index]) {
-      updatedImages[index] = { url: '', description: '' }
+      updatedImages[index] = { file: '', description: '', alternate_text: '' }
     }
     setImages(updatedImages)
   }
@@ -54,6 +61,13 @@ function AddImages({ steps, activeStep, setActiveStep, handleNext }) {
     const updatedImages = [...images]
     updatedImages.splice(index, 1)
     setImages(updatedImages)
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    const res = await dispatch(
+      addProductImage({ product_id: product.id, images }),
+    )
   }
 
   return (
@@ -129,7 +143,13 @@ function AddImages({ steps, activeStep, setActiveStep, handleNext }) {
               className="shadow-none bg-white"
               style={{ marginBottom: '30px', borderRadius: '0px' }}
             >
-              <CardContent style={{ padding: '3rem', borderRadius: '10px', paddingTop: '0' }}>
+              <CardContent
+                style={{
+                  padding: '3rem',
+                  borderRadius: '10px',
+                  paddingTop: '0',
+                }}
+              >
                 <Typography
                   className="font-bold text-left py-4"
                   variant="h6"
@@ -140,19 +160,47 @@ function AddImages({ steps, activeStep, setActiveStep, handleNext }) {
                 >
                   Instructions
                 </Typography>
-                <Typography className="py-4" align='justify' variant="p">
+                <Typography className="py-4" align="justify" variant="p">
                   <List sx={{ listStyleType: 'disc' }}>
-                    <ListItem sx={{ display: 'list-item', fontSize: '15px' }}>Upload a minimum of six high-quality images for each product listing.</ListItem>
-                    <ListItem sx={{ display: 'list-item', fontSize: '15px' }}>Include images from various angles to provide a comprehensive view of the product.</ListItem>
-                    <ListItem sx={{ display: 'list-item', fontSize: '15px' }}>Ensure images are well-lit, clear, and of high resolution for optimal presentation.</ListItem>
-                    <ListItem sx={{ display: 'list-item', fontSize: '15px' }}>Showcase the product in use, its packaging, and any special features or accessories.</ListItem>
-                    <ListItem sx={{ display: 'list-item', fontSize: '15px' }}>Maintain consistency in background, lighting, and styling for a professional appearance.</ListItem>
-                    <ListItem sx={{ display: 'list-item', fontSize: '15px' }}>Avoid over-editing or misleading enhancements that may misrepresent the product.</ListItem>
-                    <ListItem sx={{ display: 'list-item', fontSize: '15px' }}>High-quality images increase buyer interest and improve sales potential.</ListItem>
+                    <ListItem sx={{ display: 'list-item', fontSize: '15px' }}>
+                      Upload a minimum of six high-quality images for each
+                      product listing.
+                    </ListItem>
+                    <ListItem sx={{ display: 'list-item', fontSize: '15px' }}>
+                      Include images from various angles to provide a
+                      comprehensive view of the product.
+                    </ListItem>
+                    <ListItem sx={{ display: 'list-item', fontSize: '15px' }}>
+                      Ensure images are well-lit, clear, and of high resolution
+                      for optimal presentation.
+                    </ListItem>
+                    <ListItem sx={{ display: 'list-item', fontSize: '15px' }}>
+                      Showcase the product in use, its packaging, and any
+                      special features or accessories.
+                    </ListItem>
+                    <ListItem sx={{ display: 'list-item', fontSize: '15px' }}>
+                      Maintain consistency in background, lighting, and styling
+                      for a professional appearance.
+                    </ListItem>
+                    <ListItem sx={{ display: 'list-item', fontSize: '15px' }}>
+                      Avoid over-editing or misleading enhancements that may
+                      misrepresent the product.
+                    </ListItem>
+                    <ListItem sx={{ display: 'list-item', fontSize: '15px' }}>
+                      High-quality images increase buyer interest and improve
+                      sales potential.
+                    </ListItem>
                   </List>
                 </Typography>
-                <Typography align='left' variant='h6' sx={{ fontSize: '14px', textAlign: 'left', color: '#4BB543' }}>
-                  <span style={{ color: 'black' }}>Note:</span>  Products with six or more high-quality images are more likely to attract buyers and result in successful sales. Please adhere to these guidelines to optimize your product listings.
+                <Typography
+                  align="left"
+                  variant="h6"
+                  sx={{ fontSize: '14px', textAlign: 'left', color: '#4BB543' }}
+                >
+                  <span style={{ color: 'black' }}>Note:</span> Products with
+                  six or more high-quality images are more likely to attract
+                  buyers and result in successful sales. Please adhere to these
+                  guidelines to optimize your product listings.
                 </Typography>
               </CardContent>
             </Card>
@@ -161,19 +209,32 @@ function AddImages({ steps, activeStep, setActiveStep, handleNext }) {
       </Grid>
       <div className="flex justify-end space-x-4">
         {activeStep !== steps.length - 1 && (
-          <Button variant="outlined" sx={{
-            borderRadius: '15px',
-            fontWeight: '900',
-            borderWidth: '2px'
-          }} color="success">
+          <Button
+            variant="outlined"
+            sx={{
+              borderRadius: '15px',
+              fontWeight: '900',
+              borderWidth: '2px',
+            }}
+            color="success"
+            onClick={handleSubmit}
+          >
             Save
           </Button>
         )}
-        <Button variant="contained" color="success" sx={{
-          color: 'white !important',
-          borderRadius: '15px',
-          fontWeight: '900'
-        }} onClick={handleNext}>
+        <Button
+          variant="contained"
+          color="success"
+          sx={{
+            color: 'white !important',
+            borderRadius: '15px',
+            fontWeight: '900',
+          }}
+          onClick={(e) => {
+            handleSubmit(e)
+            handleNext(e)
+          }}
+        >
           {activeStep !== steps.length - 1 ? 'Save & Next' : 'Submit'}
         </Button>
       </div>

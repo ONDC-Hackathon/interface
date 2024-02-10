@@ -14,16 +14,21 @@ import { getAttributes } from '../Redux/services/attribute.service'
 import { addProductAttribute } from '../Redux/services/product.service'
 
 function AddDetailedInfo({ steps, activeStep, setActiveStep, handleNext }) {
-
   const dispatch = useDispatch()
-  const { product } = useSelector(state => state.product)
+  const { product } = useSelector((state) => state.product)
 
   const [options, setOptions] = useState([])
   const [selectedOptions, setSelectedOptions] = useState({})
   const [inputValues, setInputValues] = useState({})
 
   const fetchOptions = async () => {
-    const res = await dispatch(getAttributes({ category: product.category, sub_category: product.sub_category, variant: product.variant }))
+    const res = await dispatch(
+      getAttributes({
+        category: product.category,
+        sub_category: product.sub_category,
+        variant: product.variant,
+      }),
+    )
     const data = res.payload.data
     setOptions(data)
     const initialSelectedOptions = {}
@@ -42,9 +47,9 @@ function AddDetailedInfo({ steps, activeStep, setActiveStep, handleNext }) {
     setSelectedOptions({ ...selectedOptions, [value]: checked })
 
     if (!checked) {
-      setInputValues(current => {
-        const { [value]: _, ...rest } = current;
-        return rest;
+      setInputValues((current) => {
+        const { [value]: _, ...rest } = current
+        return rest
       })
     }
   }
@@ -56,7 +61,9 @@ function AddDetailedInfo({ steps, activeStep, setActiveStep, handleNext }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    const res = await dispatch(addProductAttribute({ product_id: product.id, attributes: inputValues }))
+    const res = await dispatch(
+      addProductAttribute({ product_id: product.id, attributes: inputValues }),
+    )
   }
 
   return (
@@ -77,20 +84,21 @@ function AddDetailedInfo({ steps, activeStep, setActiveStep, handleNext }) {
                   More Info
                 </Typography>
                 <form onSubmit={handleSubmit}>
-                  {options.length !== 0 && options.map((option) =>
-                    selectedOptions[option.id] ? (
-                      <TextField
-                        key={option.id}
-                        label={option.title}
-                        variant="outlined"
-                        fullWidth
-                        margin="normal"
-                        name={option.id}
-                        value={inputValues[option.id]}
-                        onChange={handleInputChange}
-                      />
-                    ) : null,
-                  )}
+                  {options.length !== 0 &&
+                    options.map((option) =>
+                      selectedOptions[option.id] ? (
+                        <TextField
+                          key={option.id}
+                          label={option.title}
+                          variant="outlined"
+                          fullWidth
+                          margin="normal"
+                          name={option.id}
+                          value={inputValues[option.id]}
+                          onChange={handleInputChange}
+                        />
+                      ) : null,
+                    )}
                 </form>
               </CardContent>
             </Card>
@@ -102,7 +110,9 @@ function AddDetailedInfo({ steps, activeStep, setActiveStep, handleNext }) {
               className="shadow-none bg-white"
               style={{ marginBottom: '30px', borderRadius: '0px' }}
             >
-              <CardContent style={{ padding: '0rem 1rem 1rem 1rem', borderRadius: '10px' }}>
+              <CardContent
+                style={{ padding: '0rem 1rem 1rem 1rem', borderRadius: '10px' }}
+              >
                 <Typography
                   className="font-bold text-left py-4"
                   variant="h6"
@@ -113,42 +123,55 @@ function AddDetailedInfo({ steps, activeStep, setActiveStep, handleNext }) {
                 >
                   Instructions
                 </Typography>
-                <Typography className="text-left py-4" sx={{
-                  color: '#777777',
-                  fontSize: '16px'
-                }} variant="body1">
-                  Enhance your product listing by providing clear and comprehensive details.
+                <Typography
+                  className="text-left py-4"
+                  sx={{
+                    color: '#777777',
+                    fontSize: '16px',
+                  }}
+                  variant="body1"
+                >
+                  Enhance your product listing by providing clear and
+                  comprehensive details.
                 </Typography>
-                <Typography align='left' paragraph={true} sx={{
-                  fontSize: '16px',
-                }}>
-                  Add these recommended parameters based on your product's category and subcategory to make your listing stand out:
+                <Typography
+                  align="left"
+                  paragraph={true}
+                  sx={{
+                    fontSize: '16px',
+                  }}
+                >
+                  Add these recommended parameters based on your product's
+                  category and subcategory to make your listing stand out:
                 </Typography>
-                <Box sx={{
-                  padding: '1rem',
-                  border: '2px solid #dddddd',
-                }}>
+                <Box
+                  sx={{
+                    padding: '1rem',
+                    border: '2px solid #dddddd',
+                  }}
+                >
                   <FormGroup>
-                    {options.length !== 0 && options.map((option) => (
-                      <FormControlLabel
-                        key={option.id}
-                        sx={{
-                          '& .MuiFormControlLabel-label': {
-                            fontSize: '16px',
+                    {options.length !== 0 &&
+                      options.map((option) => (
+                        <FormControlLabel
+                          key={option.id}
+                          sx={{
+                            '& .MuiFormControlLabel-label': {
+                              fontSize: '16px',
+                            },
+                          }}
+                          control={
+                            <Checkbox
+                              checked={selectedOptions[option.id]}
+                              onChange={handleCheckboxChange}
+                              name={option.title}
+                              color="secondary"
+                              value={option.id}
+                            />
                           }
-                        }}
-                        control={
-                          <Checkbox
-                            checked={selectedOptions[option.id]}
-                            onChange={handleCheckboxChange}
-                            name={option.title}
-                            color='secondary'
-                            value={option.id}
-                          />
-                        }
-                        label={option.title}
-                      />
-                    ))}
+                          label={option.title}
+                        />
+                      ))}
                   </FormGroup>
                 </Box>
               </CardContent>
@@ -158,26 +181,32 @@ function AddDetailedInfo({ steps, activeStep, setActiveStep, handleNext }) {
       </Grid>
       <div className="flex justify-end space-x-4">
         {activeStep !== steps.length - 1 && (
-          <Button variant="outlined" sx={{
-            borderRadius: '15px',
-            fontWeight: '900',
-            borderWidth: '2px'
-          }}
+          <Button
+            variant="outlined"
+            sx={{
+              borderRadius: '15px',
+              fontWeight: '900',
+              borderWidth: '2px',
+            }}
             color="success"
             onClick={handleSubmit}
           >
             Save
           </Button>
         )}
-        <Button variant="contained" color="success" sx={{
-          color: 'white !important',
-          borderRadius: '15px',
-          fontWeight: '900'
-        }}
-          onClick={(e) => {
-            handleSubmit(e)
+        <Button
+          variant="contained"
+          color="success"
+          sx={{
+            color: 'white !important',
+            borderRadius: '15px',
+            fontWeight: '900',
+          }}
+          onClick={async (e) => {
+            await handleSubmit(e)
             handleNext(e)
-          }}>
+          }}
+        >
           {activeStep !== steps.length - 1 ? 'Save & Next' : 'Submit'}
         </Button>
       </div>

@@ -5,14 +5,13 @@ import subCategoryReducer from './features/subCategory.slice'
 import variantReducer from './features/variant.slice'
 import productReducer from './features/product.slice'
 
-
 const store = configureStore({
   reducer: {
     auth: authReducer,
     category: categoryReducer,
     subCategory: subCategoryReducer,
     variant: variantReducer,
-    product: productReducer
+    product: productReducer,
   },
 })
 export default store

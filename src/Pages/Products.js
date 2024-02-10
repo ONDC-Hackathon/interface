@@ -45,7 +45,6 @@ const Products = () => {
   const [products, setProducts] = useState([])
 
   const fetchProduct = async () => {
-
     const res = await dispatch(getProducts({}))
     const data = res.payload.data
 
