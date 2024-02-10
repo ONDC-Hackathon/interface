@@ -66,9 +66,9 @@ function AddImages({ steps, activeStep, setActiveStep, handleNext }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    const response = await dispatch(addProductImage({ product_id: 8, images }))
-    
-      handleNext(event)
+    const response = await dispatch(addProductImage({ product_id: product.id, images }))
+    console.log(response)
+    handleNext(event)
   }
 
   return (
