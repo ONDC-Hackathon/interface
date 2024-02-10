@@ -1,4 +1,5 @@
 import './App.css'
+import React, { useEffect } from 'react'
 import {
   BrowserRouter,
   Routes,
@@ -21,6 +22,8 @@ import theme from './Components/theme'
 import { getCategories } from './Redux/services/category.service'
 import { getSubCategories } from './Redux/services/subCategory.service'
 import { getVariants } from './Redux/services/variant.service'
+import Alert from '@mui/material/Alert'
+import { clearAlert } from './Redux/features/alert.slice'
 
 const ProtectedRoute = () => {
   const { userToken } = useSelector((state) => state.auth)
@@ -29,13 +32,42 @@ const ProtectedRoute = () => {
 
 function App() {
   const dispatch = useDispatch()
-  dispatch(getCategories({}))
-  dispatch(getSubCategories({}))
-  dispatch(getVariants({}))
+  const alert = useSelector((state) => state.alert)
+
+  useEffect(() => {
+    dispatch(getCategories({}))
+    dispatch(getSubCategories({}))
+    dispatch(getVariants({}))
+  }, [dispatch])
+
+  useEffect(() => {
+    if (alert.type && alert.message) {
+      const timer = setTimeout(() => {
+        dispatch(clearAlert())
+      }, 5000)
+
+      return () => clearTimeout(timer)
+    }
+  }, [alert, dispatch])
 
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
+        {alert.type && (
+          <Alert
+            severity={alert.type}
+            sx={{
+              position: 'fixed',
+              bottom: '50px',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              zIndex: 10000,
+              maxWidth: '90%',
+            }}
+          >
+            {alert.message}
+          </Alert>
+        )}
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<ProtectedRoute />}>

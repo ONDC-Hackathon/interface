@@ -10,6 +10,7 @@ import AddIcon from '@mui/icons-material/Add'
 import { List, ListItem } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { addProductImage } from '../Redux/services/product.service'
+import { setAlert } from '../Redux/features/alert.slice'
 
 const imagePrompts = [
   'Front view',
@@ -63,11 +64,19 @@ function AddImages({ steps, activeStep, setActiveStep, handleNext }) {
     setImages(updatedImages)
   }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    const res = await dispatch(
-      addProductImage({ product_id: product.id, images }),
-    )
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+    const response = await addProductImage({ product_id: product.id, images })
+    if (response.meta.requestStatus == 'rejected') {
+      dispatch(
+        setAlert({
+          type: 'error',
+          message: response.error.message,
+        }),
+      )
+    } else {
+      handleNext(event)
+    }
   }
 
   return (
@@ -208,20 +217,6 @@ function AddImages({ steps, activeStep, setActiveStep, handleNext }) {
         </Grid>
       </Grid>
       <div className="flex justify-end space-x-4">
-        {activeStep !== steps.length - 1 && (
-          <Button
-            variant="outlined"
-            sx={{
-              borderRadius: '15px',
-              fontWeight: '900',
-              borderWidth: '2px',
-            }}
-            color="success"
-            onClick={handleSubmit}
-          >
-            Save
-          </Button>
-        )}
         <Button
           variant="contained"
           color="success"
@@ -230,10 +225,7 @@ function AddImages({ steps, activeStep, setActiveStep, handleNext }) {
             borderRadius: '15px',
             fontWeight: '900',
           }}
-          onClick={(e) => {
-            handleSubmit(e)
-            handleNext(e)
-          }}
+          onClick={(e) => handleSubmit(e)}
         >
           {activeStep !== steps.length - 1 ? 'Save & Next' : 'Submit'}
         </Button>
