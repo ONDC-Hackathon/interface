@@ -67,23 +67,17 @@ function AddBasicInfo({ steps, activeStep, setActiveStep, handleNext }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    dispatch(
-      setAlert({
-        type: 'warning',
-        message: 'Please fill all the fields',
-      }),
-    )
-    // const response = await dispatch(addProduct(product))
-    // if (response.meta.requestStatus == 'rejected') {
-    //   dispatch(
-    //     setAlert({
-    //       type: 'error',
-    //       message: response.error,
-    //     }),
-    //   )
-    // } else {
-    //   handleNext(e)
-    // }
+    const response = await dispatch(addProduct(product))
+    if (response.meta.requestStatus == 'rejected') {
+      dispatch(
+        setAlert({
+          type: 'error',
+          message: response.error,
+        }),
+      )
+    } else {
+      handleNext(e)
+    }
   }
 
   const handleChange = (e, param) => {

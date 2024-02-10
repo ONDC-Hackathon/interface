@@ -8,17 +8,22 @@ import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import AddIcon from '@mui/icons-material/Add'
 import { List, ListItem } from '@mui/material'
+import { useDispatch, useSelector } from 'react-redux'
+import { addProductImage } from '../Redux/services/product.service'
 
 const imagePrompts = [
-  'Upload product front view',
-  'Upload product back view',
-  'Upload product side view',
-  'Upload product in use',
-  'Upload product packaging',
-  'Upload any additional image',
+  'Front view',
+  'Back view',
+  'Side view',
+  'In use',
+  'Package/Label',
+  'Additional',
 ]
 
 function AddImages({ steps, activeStep, setActiveStep, handleNext }) {
+  const dispatch = useDispatch()
+  const { product } = useSelector((state) => state.product)
+
   const [images, setImages] = useState([])
 
   const handleImageChange = (event, index) => {
@@ -27,7 +32,9 @@ function AddImages({ steps, activeStep, setActiveStep, handleNext }) {
       const updatedImages = [...images]
       updatedImages[index] = {
         ...updatedImages[index],
+        file: file,
         url: URL.createObjectURL(file),
+        alternate_text: imagePrompts[index],
       }
       setImages(updatedImages)
     }
@@ -45,7 +52,7 @@ function AddImages({ steps, activeStep, setActiveStep, handleNext }) {
   const handleAddImageClick = (index) => {
     const updatedImages = [...images]
     if (!updatedImages[index]) {
-      updatedImages[index] = { url: '', description: '' }
+      updatedImages[index] = { file: '', description: '', alternate_text: '' }
     }
     setImages(updatedImages)
   }
@@ -54,6 +61,13 @@ function AddImages({ steps, activeStep, setActiveStep, handleNext }) {
     const updatedImages = [...images]
     updatedImages.splice(index, 1)
     setImages(updatedImages)
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    const res = await dispatch(
+      addProductImage({ product_id: product.id, images }),
+    )
   }
 
   return (
@@ -203,6 +217,7 @@ function AddImages({ steps, activeStep, setActiveStep, handleNext }) {
               borderWidth: '2px',
             }}
             color="success"
+            onClick={handleSubmit}
           >
             Save
           </Button>
@@ -215,7 +230,10 @@ function AddImages({ steps, activeStep, setActiveStep, handleNext }) {
             borderRadius: '15px',
             fontWeight: '900',
           }}
-          onClick={handleNext}
+          onClick={(e) => {
+            handleSubmit(e)
+            handleNext(e)
+          }}
         >
           {activeStep !== steps.length - 1 ? 'Save & Next' : 'Submit'}
         </Button>

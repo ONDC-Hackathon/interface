@@ -76,3 +76,31 @@ export const addProductAttribute = createAsyncThunk(
     }
   },
 )
+
+export const addProductImage = createAsyncThunk(
+  'catalogue/product_image/add/',
+  async ({ product_id, images }, { getState, rejectWithValue }) => {
+    console.log({ product_id, images })
+    const { auth } = getState()
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${auth.userToken}`,
+        },
+      }
+      const res = await client.post(
+        `catalogue/product_image/add/`,
+        { product_id, images },
+        config,
+      )
+      return res
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message)
+      } else {
+        return rejectWithValue(error.message)
+      }
+    }
+  },
+)

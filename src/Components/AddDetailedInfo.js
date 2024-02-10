@@ -202,8 +202,8 @@ function AddDetailedInfo({ steps, activeStep, setActiveStep, handleNext }) {
             borderRadius: '15px',
             fontWeight: '900',
           }}
-          onClick={(e) => {
-            handleSubmit(e)
+          onClick={async (e) => {
+            await handleSubmit(e)
             handleNext(e)
           }}
         >
