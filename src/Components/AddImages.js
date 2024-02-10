@@ -66,17 +66,9 @@ function AddImages({ steps, activeStep, setActiveStep, handleNext }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    const response = await addProductImage({ product_id: product.id, images })
-    if (response.meta.requestStatus == 'rejected') {
-      dispatch(
-        setAlert({
-          type: 'error',
-          message: response.error.message,
-        }),
-      )
-    } else {
+    const response = await dispatch(addProductImage({ product_id: 8, images }))
+    
       handleNext(event)
-    }
   }
 
   return (
