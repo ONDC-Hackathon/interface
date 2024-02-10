@@ -15,10 +15,9 @@ import {
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
 import { useDispatch, useSelector } from 'react-redux'
-import { addProduct } from "../Redux/services/product.service"
+import { addProduct } from '../Redux/services/product.service'
 
 function AddBasicInfo({ steps, activeStep, setActiveStep, handleNext }) {
-
   const dispatch = useDispatch()
   const { categories } = useSelector((state) => state.category)
   const { subCategories } = useSelector((state) => state.subCategory)
@@ -37,23 +36,27 @@ function AddBasicInfo({ steps, activeStep, setActiveStep, handleNext }) {
     available_stock: '',
     tax: '',
     about: '',
-    manufacturer: ''
+    manufacturer: '',
   })
 
   const handleSubmit = async (event) => {
     event.preventDefault()
     const res = await dispatch(addProduct(product))
-    console.log("res: ", res.payload.data)
+    console.log('res: ', res.payload.data)
   }
 
   const handleChange = (e, param) => {
     setProduct({ ...product, [param]: e.target.value })
     if (param === 'category') {
-      const data = subCategories.filter((subCategory) => subCategory.category === e.target.value)
+      const data = subCategories.filter(
+        (subCategory) => subCategory.category === e.target.value,
+      )
       setSubCategoryList(data)
     }
     if (param === 'sub_category') {
-      const data = variants.filter((variant) => variant.sub_category === e.target.value)
+      const data = variants.filter(
+        (variant) => variant.sub_category === e.target.value,
+      )
       setVariantList(data)
     }
   }
@@ -87,7 +90,9 @@ function AddBasicInfo({ steps, activeStep, setActiveStep, handleNext }) {
                       id="productDescription"
                       theme="snow"
                       value={product.about}
-                      onChange={(e) => handleChange({ target: { value: e } }, 'about')}
+                      onChange={(e) =>
+                        handleChange({ target: { value: e } }, 'about')
+                      }
                     />
                   </div>
                 </form>
@@ -172,9 +177,12 @@ function AddBasicInfo({ steps, activeStep, setActiveStep, handleNext }) {
                       label="Category"
                       onChange={(e) => handleChange(e, 'category')}
                     >
-                      {categories.length !== 0 && categories.map((category) =>
-                        (<MenuItem value={category.id}>{category.title}</MenuItem>)
-                      )}
+                      {categories.length !== 0 &&
+                        categories.map((category) => (
+                          <MenuItem value={category.id}>
+                            {category.title}
+                          </MenuItem>
+                        ))}
                     </Select>
                   </FormControl>
                   <FormControl sx={{ marginBottom: '10px' }}>
@@ -184,9 +192,12 @@ function AddBasicInfo({ steps, activeStep, setActiveStep, handleNext }) {
                       label="Sub Category"
                       onChange={(e) => handleChange(e, 'sub_category')}
                     >
-                      {subCategoryList.length !== 0 && subCategoryList.map((subCategory) => (
-                        <MenuItem value={subCategory.id}>{subCategory.title}</MenuItem>
-                      ))}
+                      {subCategoryList.length !== 0 &&
+                        subCategoryList.map((subCategory) => (
+                          <MenuItem value={subCategory.id}>
+                            {subCategory.title}
+                          </MenuItem>
+                        ))}
                     </Select>
                   </FormControl>
                   <FormControl sx={{ marginBottom: '10px' }}>
@@ -196,9 +207,12 @@ function AddBasicInfo({ steps, activeStep, setActiveStep, handleNext }) {
                       label="Variant"
                       onChange={(e) => handleChange(e, 'variant')}
                     >
-                      {variantList.length !== 0 && variantList.map((variant) => (
-                        <MenuItem value={variant.id}>{variant.title}</MenuItem>
-                      ))}
+                      {variantList.length !== 0 &&
+                        variantList.map((variant) => (
+                          <MenuItem value={variant.id}>
+                            {variant.title}
+                          </MenuItem>
+                        ))}
                     </Select>
                   </FormControl>
                 </form>
@@ -233,31 +247,36 @@ function AddBasicInfo({ steps, activeStep, setActiveStep, handleNext }) {
       </Grid>
       <div className="flex justify-end space-x-4">
         {activeStep !== steps.length - 1 && (
-          <Button variant="outlined" sx={{
-            borderRadius: '15px',
-            fontWeight: '900',
-            borderWidth: '2px'
-          }}
+          <Button
+            variant="outlined"
+            sx={{
+              borderRadius: '15px',
+              fontWeight: '900',
+              borderWidth: '2px',
+            }}
             color="success"
             onClick={handleSubmit}
           >
             Save
           </Button>
         )}
-        <Button variant="contained" color="success" sx={{
-          color: 'white !important',
-          borderRadius: '15px',
-          fontWeight: '900'
-        }}
+        <Button
+          variant="contained"
+          color="success"
+          sx={{
+            color: 'white !important',
+            borderRadius: '15px',
+            fontWeight: '900',
+          }}
           onClick={(e) => {
             handleSubmit(e)
             handleNext(e)
-          }}>
+          }}
+        >
           {activeStep !== steps.length - 1 ? 'Save & Next' : 'Submit'}
         </Button>
       </div>
     </>
-
   )
 }
 

@@ -28,12 +28,11 @@ const ProtectedRoute = () => {
 }
 
 function App() {
-
   const dispatch = useDispatch()
   dispatch(getCategories({}))
   dispatch(getSubCategories({}))
   dispatch(getVariants({}))
-  
+
   return (
     <ThemeProvider theme={theme}>
       <div className="App">

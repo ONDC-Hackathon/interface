@@ -36,7 +36,7 @@ const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
 }))
 
 const SaveNextBtn = styled(Button)(({ theme }) => ({
-  backgroundColor: theme.palette.common.green
+  backgroundColor: theme.palette.common.green,
 }))
 
 const steps = [
@@ -47,20 +47,62 @@ const steps = [
   'Review',
 ]
 
-const ActiveTab = ({ steps, activeStep, setActiveStep , handleNext}) => {
+const ActiveTab = ({ steps, activeStep, setActiveStep, handleNext }) => {
   switch (activeStep) {
     case 0:
-      return <AddBasicInfo steps={steps} activeStep={activeStep} setActiveStep={setActiveStep} handleNext={handleNext} />
+      return (
+        <AddBasicInfo
+          steps={steps}
+          activeStep={activeStep}
+          setActiveStep={setActiveStep}
+          handleNext={handleNext}
+        />
+      )
     case 1:
-      return <AddDetailedInfo steps={steps} activeStep={activeStep} setActiveStep={setActiveStep} handleNext={handleNext} />
+      return (
+        <AddDetailedInfo
+          steps={steps}
+          activeStep={activeStep}
+          setActiveStep={setActiveStep}
+          handleNext={handleNext}
+        />
+      )
     case 2:
-      return <AddImages steps={steps} activeStep={activeStep} setActiveStep={setActiveStep} handleNext={handleNext} />
+      return (
+        <AddImages
+          steps={steps}
+          activeStep={activeStep}
+          setActiveStep={setActiveStep}
+          handleNext={handleNext}
+        />
+      )
     case 3:
-      return <AddCompliances steps={steps} activeStep={activeStep} setActiveStep={setActiveStep} handleNext={handleNext} />
+      return (
+        <AddCompliances
+          steps={steps}
+          activeStep={activeStep}
+          setActiveStep={setActiveStep}
+          handleNext={handleNext}
+        />
+      )
     case 4:
-      return <Review steps={steps} activeStep={activeStep} setActiveStep={setActiveStep} handleNext={handleNext} />
+      return (
+        <Review
+          steps={steps}
+          activeStep={activeStep}
+          setActiveStep={setActiveStep}
+          handleNext={handleNext}
+        />
+      )
     default:
-      return <AddBasicInfo steps={steps} activeStep={activeStep} setActiveStep={setActiveStep} handleNext={handleNext} />
+      return (
+        <AddBasicInfo
+          steps={steps}
+          activeStep={activeStep}
+          setActiveStep={setActiveStep}
+          handleNext={handleNext}
+        />
+      )
   }
 }
 
@@ -113,7 +155,12 @@ function AddProduct() {
           ))}
         </Stepper>
       </div>
-      <ActiveTab steps={steps} activeStep={activeStep} setActiveStep={setActiveStep} handleNext={handleNext}/>
+      <ActiveTab
+        steps={steps}
+        activeStep={activeStep}
+        setActiveStep={setActiveStep}
+        handleNext={handleNext}
+      />
     </div>
   )
 }
