@@ -39,9 +39,9 @@ function Product() {
   const fetchData = async (id) => {
     const res = await dispatch(getProduct({ id }))
     const data = res.payload.data.data
-    setProduct(data["basics"])
-    setDetails(data["details"])
-    setImages(data["basics"]["images"])
+    setProduct(data['basics'])
+    setDetails(data['details'])
+    setImages(data['basics']['images'])
   }
 
   useEffect(() => {
@@ -54,20 +54,21 @@ function Product() {
         <Grid container spacing={1}>
           <Grid xs={5}>
             {images && <ProductImages images={images} />}
-            {product && <ProductScores StyledBox={StyledBox} product={product}/>}
+            {product && <ProductScores product={product} />}
           </Grid>
           <Grid xs={7}>
-            {product && <BasicProductDetails StyledBox={StyledBox} product={product} />}
-            {product && <ProductDescFeatures
-              StyledBox={StyledBox}
-              description={product.about}
-            />
-            }
-            {details && <ProductDetails
-              StyledBox={StyledBox}
-              details={details}
-            />
-            }
+            {product && (
+              <BasicProductDetails StyledBox={StyledBox} product={product} />
+            )}
+            {product && (
+              <ProductDescFeatures
+                StyledBox={StyledBox}
+                description={product.about}
+              />
+            )}
+            {details && (
+              <ProductDetails StyledBox={StyledBox} details={details} />
+            )}
           </Grid>
         </Grid>
       </Paper>

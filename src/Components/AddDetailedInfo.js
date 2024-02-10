@@ -16,7 +16,7 @@ import { setAlert } from '../Redux/features/alert.slice'
 
 function AddDetailedInfo({ steps, activeStep, setActiveStep, handleNext }) {
   const dispatch = useDispatch()
-  const { product } = useSelector((state) => state.product)
+  const { edit, product } = useSelector((state) => state.product)
 
   const [options, setOptions] = useState([])
   const [selectedOptions, setSelectedOptions] = useState({})

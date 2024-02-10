@@ -26,27 +26,27 @@ export const getProducts = createAsyncThunk(
 )
 
 export const getProduct = createAsyncThunk(
-    'catalogue/product',
-    async ({ id }, { getState, rejectWithValue }) => {
-        console.log('Inside getProduct')
-        const { auth } = getState()
-        try {
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${auth.userToken}`,
-                },
-            }
-            const res = await client.get(`catalogue/product/${id}/`, config)
-            return res
-        } catch (error) {
-            if (error.response?.data?.message) {
-                return rejectWithValue(error.response.data.message)
-            } else {
-                return rejectWithValue(error.message)
-            }
-        }
-    },
+  'catalogue/product',
+  async ({ id }, { getState, rejectWithValue }) => {
+    console.log('Inside getProduct')
+    const { auth } = getState()
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${auth.userToken}`,
+        },
+      }
+      const res = await client.get(`catalogue/product/${id}/`, config)
+      return res
+    } catch (error) {
+      if (error.response?.data?.message) {
+        return rejectWithValue(error.response.data.message)
+      } else {
+        return rejectWithValue(error.message)
+      }
+    }
+  },
 )
 
 export const addProduct = createAsyncThunk(
@@ -61,6 +61,29 @@ export const addProduct = createAsyncThunk(
         },
       }
       const res = await client.post(`catalogue/product/add/`, data, config)
+      return res
+    } catch (error) {
+      if (error.response?.data?.message) {
+        return rejectWithValue(error.response.data.message)
+      } else {
+        return rejectWithValue(error.message)
+      }
+    }
+  },
+)
+
+export const updateProduct = createAsyncThunk(
+  'catalogue/product/update/',
+  async (data, { getState, rejectWithValue }) => {
+    const { auth } = getState()
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${auth.userToken}`,
+        },
+      }
+      const res = await client.post(`catalogue/product/edit/`, data, config)
       return res
     } catch (error) {
       if (error.response?.data?.message) {
@@ -138,10 +161,7 @@ export const evaluateScore = createAsyncThunk(
           Authorization: `Bearer ${auth.userToken}`,
         },
       }
-      const res = await client.get(
-        `catalogue/evaluate_score/${pk}/`,
-        config,
-      )
+      const res = await client.get(`catalogue/evaluate_score/${pk}/`, config)
       return res
     } catch (error) {
       if (error.response && error.response.data.message) {
@@ -164,10 +184,7 @@ export const checkScore = createAsyncThunk(
           Authorization: `Bearer ${auth.userToken}`,
         },
       }
-      const res = await client.get(
-        `catalogue/check_score/${pk}/`,
-        config,
-      )
+      const res = await client.get(`catalogue/check_score/${pk}/`, config)
       return res
     } catch (error) {
       if (error.response && error.response.data.message) {

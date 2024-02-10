@@ -1,5 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { addProduct, getProducts, getProduct } from '../services/product.service'
+import {
+  addProduct,
+  getProducts,
+  getProduct,
+} from '../services/product.service'
 
 const initialState = {
   loading: false,
@@ -7,7 +11,8 @@ const initialState = {
   products: [],
   error: null,
   success: null,
-  details: []
+  details: [],
+  edit: false,
 }
 
 const productSlice = createSlice({
@@ -18,6 +23,10 @@ const productSlice = createSlice({
       state.products = state.products.filter(
         (product) => product.id !== action.payload,
       )
+    },
+    editProduct: (state, action) => {
+      state.edit = true
+      state.product = action.payload
     },
   },
   extraReducers: (builder) => {
@@ -57,8 +66,8 @@ const productSlice = createSlice({
       .addCase(getProduct.fulfilled, (state, { payload }) => {
         state.loading = false
         state.success = payload.message
-        state.product = payload.data.data["basics"]
-        state.details = payload.data.data["details"]
+        state.product = payload.data.data['basics']
+        state.details = payload.data.data['details']
       })
       .addCase(getProduct.rejected, (state, { payload }) => {
         state.loading = false
@@ -67,5 +76,5 @@ const productSlice = createSlice({
   },
 })
 
-export const { deleteProduct } = productSlice.actions
+export const { deleteProduct, editProduct } = productSlice.actions
 export default productSlice.reducer

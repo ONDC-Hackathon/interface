@@ -6,7 +6,7 @@ import DeletePopup from '../Components/DeletePopup'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getProducts } from '../Redux/services/product.service'
-import { deleteProduct } from '../Redux/features/product.slice'
+import { deleteProduct, editProduct } from '../Redux/features/product.slice'
 
 const headerStyles = {
   display: 'flex',
@@ -88,7 +88,8 @@ const Products = () => {
   }
 
   const handleEditClick = (product) => {
-    // Navigate to Edit Product page logic
+    dispatch(editProduct(product))
+    navigate('/addproduct')
   }
 
   return (
