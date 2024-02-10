@@ -70,7 +70,8 @@ function Register() {
   }
 
   const handleSubmit = async () => {
-    dispatch(registerSeller({ user, seller }))
+    await dispatch(registerSeller({ user, seller }))
+    navigate("/login")
   }
 
   return (
@@ -138,7 +139,7 @@ function Register() {
                   variant="h6"
                   component="h6"
                 >
-                  {step == 0 ? 'Welcom to Incart' : 'Get your business started'}{' '}
+                  {step == 0 ? 'Welcome to Incart' : 'Get your business started'}{' '}
                 </Typography>
                 <Typography>
                   {step == 0

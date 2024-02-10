@@ -12,27 +12,32 @@ import { useNavigate } from 'react-router-dom'
 
 function Review({ steps, activeStep, setActiveStep, handleNext }) {
   const { product } = useSelector((state) => state.product)
-  const [logs, setLogs] = useState(null)
-  const [catalogueScore, setCatalogueScore] = useState(null)
+  // const [logs, setLogs] = useState(null)
   const dispatch = useDispatch()
   const navigate = useNavigate()
+
+  // useEffect(() => {
+  //   const res = dispatch(checkScore(product.id));
+  //   setLogs(res)
+  // }, [])
 
   const handleEvaluate = async (e) => {
     e.preventDefault()
     const res = await dispatch(evaluateScore(product.id))
-    console.log(res)
     await dispatch(getProduct({ id: product.id }))
   }
 
   const handleCheck = async (e) => {
     e.preventDefault()
-    const res = await dispatch(checkScore(product.id))
-    if (res.payload?.data?.data?.logs) {
-      setLogs(res.payload.data.data.logs)
-    } else {
-      setCatalogueScore(res.payload?.data?.data)
-    }
-    console.log('logs: ', logs, 'score: ', catalogueScore)
+    // const res = await dispatch(checkScore(product.id))
+    // if (res.payload?.data?.data?.logs) {
+    //   setLogs(res.payload.data.data.logs)
+    // } else {
+    //   setCatalogueScore(res.payload?.data?.data)
+    // }
+    // console.log('logs: ', res.payload.data.logs)
+    // setLogs(res.payload.data.logs)
+    await dispatch(getProduct({ id: product.id }))
   }
 
   const handlePublish = async (e) => {
@@ -53,10 +58,10 @@ function Review({ steps, activeStep, setActiveStep, handleNext }) {
         <div>
           <div>
             {product.scoring_status === 'Uninitialized'
-              ? 'Your product is under review'
-              : catalogueScore
-                ? ''
-                : 'Click check score to get logs'}
+              ? 'Generate catalogue score for your product'
+              : product.scoring_status==="Completed"
+                ? 'Click check score to get score'
+                : 'Your product is under review'}
           </div>
           <div className="flex justify-center space-x-4">
             {product.scoring_status === 'Uninitialized' ? (
@@ -72,7 +77,7 @@ function Review({ steps, activeStep, setActiveStep, handleNext }) {
               >
                 Evaluate Score
               </Button>
-            ) : catalogueScore ? (
+            ) : product.scoring_status==="Completed" ? (
               <Button
                 variant="contained"
                 color="success"
@@ -100,14 +105,14 @@ function Review({ steps, activeStep, setActiveStep, handleNext }) {
               </Button>
             )}
           </div>
-          {logs && (
+          {/* {logs && (
             <div className="flex justify-center space-x-4">
-              {logs?.map((log, index) => (
+              {logs && logs.length!==0 && logs.map((log, index) => (
                 <Typography key={index}>{log.description}</Typography>
               ))}
             </div>
-          )}
-          {catalogueScore && <ProductScores product={catalogueScore} />}
+          )} */}
+          {product.scoring_status==="Completed" && <ProductScores product={product} />}
         </div>
       )}
     </>
