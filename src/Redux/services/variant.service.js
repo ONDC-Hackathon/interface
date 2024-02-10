@@ -4,7 +4,6 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 export const getVariants = createAsyncThunk(
   'catalogue/variant',
   async ({}, { getState, rejectWithValue }) => {
-    console.log('Inside getVariants')
     const { auth } = getState()
     try {
       const config = {

@@ -6,7 +6,7 @@ import { IconButton } from '@mui/material'
 
 function ProductImages(props) {
   const [currImg, setCurrImg] = useState(0)
-  const { images, mainImg } = props
+  const { images } = props
   return (
     <>
       <Grid sx={{ marginBottom: '4rem' }} container>
@@ -25,7 +25,7 @@ function ProductImages(props) {
         </Grid>
 
         <Grid xs={10}>
-          <img src={mainImg[currImg]} alt="product" style={{ width: '100%' }} />{' '}
+          <img src={'http://127.0.0.1:8000/'+images[currImg].file} alt="product"/>
         </Grid>
         <Grid sx={{ display: 'flex', alignItems: 'center' }} xs={1}>
           <IconButton
@@ -37,15 +37,15 @@ function ProductImages(props) {
           </IconButton>
         </Grid>
       </Grid>
-      <div className="flex flex-row justify-evenly">
-        {console.log('Here')}
+      <div className="flex flex-row justify-evenly overflow-hidden">
         {images.map((img, index) => (
           <IconButton
             disableRipple
             key={index}
             onClick={() => setCurrImg(index)}
+            style={{ width: '16.5%' }}
           >
-            <img src={img} alt="product" style={{ maxWidth: '100%' }} />
+            <img src={'http://127.0.0.1:8000/' + img.file} alt="product" style={{ maxWidth: '100%' }} />
           </IconButton>
         ))}
       </div>

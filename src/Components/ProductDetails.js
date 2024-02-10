@@ -2,15 +2,15 @@ import React from 'react'
 import { Table, TableBody, TableCell, TableRow } from '@mui/material'
 
 function ProductDetails(props) {
-  const { StyledBox, productDetails } = props
+  const { StyledBox, details } = props
   return (
     <StyledBox>
       <Table>
         <TableBody>
-          {productDetails.map((detail, index) => (
+          {details.map((detail, index) => (
             <TableRow key={index}>
               <TableCell component="th" scope="row">
-                {detail.name}
+                {detail.title}
               </TableCell>
               <TableCell align="left">{detail.value}</TableCell>
             </TableRow>

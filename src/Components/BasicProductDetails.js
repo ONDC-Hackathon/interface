@@ -2,23 +2,43 @@ import React from 'react'
 import Grid from '@mui/material/Unstable_Grid2' // Grid version 2
 import LocalOfferIcon from '@mui/icons-material/LocalOffer'
 import { Typography } from '@mui/material'
+import { useSelector } from 'react-redux'
 
 function BasicProductDetails(props) {
-  const { StyledBox } = props
+  const { StyledBox, product } = props
+  const { categories } = useSelector((state) => state.category)
+  const { subCategories } = useSelector((state) => state.subCategory)
+  const { variants } = useSelector((state) => state.variant)
+
   return (
     <>
       <div style={{ marginBottom: '2rem' }}>
         <Typography align="left" variant="h3" gutterBottom>
-          Adidas Mens Restound M Running Shoe
+          {product.title}
         </Typography>
         <Typography variant="subtitle1" align="left" gutterBottom>
-          Product id: 229FR1
+          Brand: {product.brand}
         </Typography>
         <Typography align="left" variant="subtitle1" gutterBottom>
-          Seller: Adidas
+          Manufacturer: {product.manufacturer}
         </Typography>
         <Typography align="left" variant="subtitle1" gutterBottom>
-          Published on: 10 March 2022
+          Category: {categories.find(category => category.id === product.category).title}
+        </Typography>
+        <Typography align="left" variant="subtitle1" gutterBottom>
+          Sub-Category: {subCategories.find(sub_category => sub_category.id === product.sub_category).title}
+        </Typography>
+        {product.variant && <Typography align="left" variant="subtitle1" gutterBottom>
+          Variant: {variants.find(variant => variant.id === product.variant).title}
+        </Typography>}
+        <Typography align="left" variant="subtitle1" gutterBottom>
+          Created on: {new Date(product.created_at).toLocaleTimeString([], {
+            day: 'numeric',
+            month: 'numeric',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+          })}
         </Typography>
       </div>
       <Grid container spacing={2}>
@@ -35,14 +55,14 @@ function BasicProductDetails(props) {
               />{' '}
             </Typography>
             <Typography variant="subtitle1" align="left" gutterBottom>
-              $ 1600{' '}
+              INR {product.price} {' '}
             </Typography>
           </StyledBox>
         </Grid>
         <Grid xs={3}>
           <StyledBox>
             <Typography variant="subtitle1" align="left" gutterBottom>
-              Orders{' '}
+              Discount{' '}
               <LocalOfferIcon
                 sx={{
                   transform: 'rotate(90deg)',
@@ -52,7 +72,7 @@ function BasicProductDetails(props) {
               />{' '}
             </Typography>
             <Typography variant="subtitle1" align="left" gutterBottom>
-              $ 1600{' '}
+              {product.discount} %{' '}
             </Typography>
           </StyledBox>
         </Grid>
@@ -69,14 +89,14 @@ function BasicProductDetails(props) {
               />{' '}
             </Typography>
             <Typography variant="subtitle1" align="left" gutterBottom>
-              $ 1600{' '}
+              {product.available_stock}{' '}
             </Typography>
           </StyledBox>
         </Grid>
         <Grid xs={3}>
           <StyledBox>
             <Typography variant="subtitle1" align="left" gutterBottom>
-              Revenue{' '}
+              Tax{' '}
               <LocalOfferIcon
                 sx={{
                   transform: 'rotate(90deg)',
@@ -86,7 +106,7 @@ function BasicProductDetails(props) {
               />{' '}
             </Typography>
             <Typography variant="subtitle1" align="left" gutterBottom>
-              $ 1600{' '}
+              {product.tax} %{' '}
             </Typography>
           </StyledBox>
         </Grid>

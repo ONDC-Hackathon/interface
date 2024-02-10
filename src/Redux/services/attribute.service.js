@@ -7,7 +7,6 @@ export const getAttributes = createAsyncThunk(
     { category, sub_category, variant },
     { getState, rejectWithValue },
   ) => {
-    console.log('Inside getAttributes')
     const { auth } = getState()
     try {
       const config = {

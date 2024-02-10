@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { Box, Paper } from '@mui/material'
 import prodimg from '../Images/product1.png'
@@ -17,80 +17,57 @@ import ProductImages from '../Components/ProductImages'
 import BasicProductDetails from '../Components/BasicProductDetails'
 import ColorandSize from '../Components/ColorandSize'
 import ProductDescFeatures from '../Components/ProductDescFeatures'
+import { getProduct } from '../Redux/services/product.service'
+import { useDispatch } from 'react-redux'
+import ProductScores from '../Components/ProductScores'
 
 function Product() {
   const { id } = useParams()
+  const dispatch = useDispatch()
+
   const StyledBox = styled(Box)(() => ({
     border: '2px dashed #aaaaaa',
     borderRadius: '10px',
     padding: '1rem',
     marginBottom: '2.5rem',
   }))
-  const mainImg = [prodimg, prodimg, prodimg, prodimg]
-  const images = [img1, img2, img3, img4]
-  const colors = [
-    {
-      color: 'Navy Blue',
-      img: color1,
-      code: '#262C49',
-    },
-    {
-      color: 'Royal Blue',
-      img: color2,
-      code: '#1D6599',
-    },
-    {
-      color: 'Grey',
-      img: color3,
-      code: '#4C4849',
-    },
-  ]
-  const size = ['6 UK', '7 UK', '8 UK', '9 UK', '10 UK', '11 UK', '12 UK']
 
-  const features = [
-    'Sole: Rubber',
-    'Sole: Rubber',
-    'Sole: Rubber',
-    'Sole: Rubber',
-    'Sole: Rubber',
-    'Sole: Rubber',
-  ]
+  const [product, setProduct] = useState(null)
+  const [details, setDetails] = useState(null)
+  const [images, setImages] = useState(null)
 
-  const services = [
-    '10 day returs(Restrictions)',
-    '10 day returs(Restrictions)',
-    '10 day returs(Restrictions)',
-  ]
+  const fetchData = async (id) => {
+    const res = await dispatch(getProduct({ id }))
+    const data = res.payload.data.data
+    setProduct(data["basics"])
+    setDetails(data["details"])
+    setImages(data["basics"]["images"])
+  }
 
-  const productDetails = [
-    { name: 'Category', value: 'Shoes' },
-    { name: 'Brand', value: 'Adidas' },
-    { name: 'Category', value: 'Shoes' },
-    { name: 'Category', value: 'Shoes' },
-    { name: 'Category', value: 'Shoes' },
-    { name: 'Category', value: 'Shoes' },
-    { name: 'Category', value: 'Shoes' },
-    { name: 'Category', value: 'Shoes' },
-  ]
+  useEffect(() => {
+    fetchData(id)
+  }, [])
+
   return (
     <Box padding="2rem" width="100%">
       <Paper elevation={0} sx={{ width: '100%', padding: '2rem' }}>
         <Grid container spacing={1}>
           <Grid xs={5}>
-            <ProductImages mainImg={mainImg} images={images} />
+            {images && <ProductImages images={images} />}
+            {product && <ProductScores StyledBox={StyledBox} product={product}/>}
           </Grid>
           <Grid xs={7}>
-            <BasicProductDetails StyledBox={StyledBox} />
-            <ColorandSize StyledBox={StyledBox} colors={colors} size={size} />
-            <ProductDescFeatures
+            {product && <BasicProductDetails StyledBox={StyledBox} product={product} />}
+            {product && <ProductDescFeatures
               StyledBox={StyledBox}
-              features={features}
-              services={services}
+              description={product.about}
             />
-            <ProductDetails
+            }
+            {details && <ProductDetails
               StyledBox={StyledBox}
-              productDetails={productDetails}
+              details={details}
             />
+            }
           </Grid>
         </Grid>
       </Paper>

@@ -4,7 +4,6 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 export const getCategories = createAsyncThunk(
   'catalogue/category',
   async ({}, { getState, rejectWithValue }) => {
-    console.log('Inside getCategories')
     const { auth } = getState()
     try {
       const config = {
