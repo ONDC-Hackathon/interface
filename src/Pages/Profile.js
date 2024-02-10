@@ -35,18 +35,20 @@ const ProfileField = ({ label, value }) => {
       <InputLabel shrink htmlFor="bootstrap-input">
         {label}
       </InputLabel>
-      <BootstrapInput value={value} />
+      <BootstrapInput value={value} readOnly={true} />
     </FormControl>
   )
 }
 
-export default function Profile() {
+function Profile() {
   const { userInfo, sellerInfo } = useSelector((state) => state.auth)
 
   return (
     <div className="container p-4 ">
       <header className="text-start">
-        <h1 className="text-2xl font-bold">{'sellerInfo.name'}</h1>
+        <h1 className="text-2xl font-bold">
+          {userInfo.first_name + ' ' + userInfo.last_name}
+        </h1>
         <p className="text-gray-400">Business Name</p>
       </header>
 
@@ -63,18 +65,15 @@ export default function Profile() {
           }}
         >
           <div className="grid grid-cols-2 gap-4 mb-4">
-            <ProfileField label="First Name" value={userInfo.firstName} />
-            <ProfileField label="Last Name" value={userInfo.lastName} />
+            <ProfileField label="First Name" value={userInfo.first_name} />
+            <ProfileField label="Last Name" value={userInfo.last_name} />
           </div>
           <div className="grid grid-cols-2 gap-4 mb-4">
             <ProfileField label="Email" value={userInfo.email} />
-            <ProfileField label="Mobile No." value={userInfo.phone} />
+            <ProfileField label="Mobile No." value={sellerInfo.phone} />
           </div>
           <div className="grid grid-cols-1 gap-4 mb-4">
-            <ProfileField
-              label="Aadhar Number"
-              value={sellerInfo.aadharNumber}
-            />
+            <ProfileField label="Aadhar Number" value={sellerInfo.aadhaar} />
           </div>
         </Card>
       </section>
@@ -92,10 +91,7 @@ export default function Profile() {
           }}
         >
           <div className="grid grid-cols-2 gap-4 mb-4">
-            <ProfileField
-              label="Business Name"
-              value={sellerInfo.businessName}
-            />
+            <ProfileField label="Business Name" value={userInfo.username} />
             <ProfileField label="GSTIN" value={sellerInfo.gstin} />
           </div>
           <div className="grid grid-cols-2 gap-4 mb-4">
@@ -109,15 +105,15 @@ export default function Profile() {
           <div className="grid grid-cols-1 gap-4 mb-4">
             <ProfileField
               label="Address Line 1"
-              value={sellerInfo.addressLine1}
+              value={sellerInfo.address_line_1}
             />
             <ProfileField
               label="Address Line 2"
-              value={sellerInfo.addressLine2}
+              value={sellerInfo.address_line_2}
             />
             <ProfileField
               label="Address Line 3"
-              value={sellerInfo.addressLine3}
+              value={sellerInfo.address_line_3}
             />
           </div>
         </Card>
@@ -125,3 +121,5 @@ export default function Profile() {
     </div>
   )
 }
+
+export default Profile
