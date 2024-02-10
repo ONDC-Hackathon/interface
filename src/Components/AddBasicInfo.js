@@ -15,11 +15,12 @@ import {
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
 import { useDispatch, useSelector } from 'react-redux'
-import { addProduct } from '../Redux/services/product.service'
+import { addProduct, updateProduct } from '../Redux/services/product.service'
 import { setAlert } from '../Redux/features/alert.slice'
 
 function AddBasicInfo({ steps, activeStep, setActiveStep, handleNext }) {
   const dispatch = useDispatch()
+  const { edit, product: editProduct } = useSelector((state) => state.product)
   const { categories } = useSelector((state) => state.category)
   const { subCategories } = useSelector((state) => state.subCategory)
   const { variants } = useSelector((state) => state.variant)
@@ -68,6 +69,7 @@ function AddBasicInfo({ steps, activeStep, setActiveStep, handleNext }) {
   const handleSubmit = async (event) => {
     event.preventDefault()
     const response = await dispatch(addProduct(product))
+    console.log(response)
     if (response.meta.requestStatus == 'rejected') {
       dispatch(
         setAlert({

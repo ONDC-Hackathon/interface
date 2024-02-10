@@ -14,6 +14,7 @@ import AddBasicInfo from '../Components/AddBasicInfo'
 import AddDetailedInfo from '../Components/AddDetailedInfo'
 import AddImages from '../Components/AddImages'
 import Review from '../Components/Review'
+import { useSelector } from 'react-redux'
 
 const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.active}`]: {
@@ -96,6 +97,7 @@ const ActiveTab = ({ steps, activeStep, setActiveStep, handleNext }) => {
 }
 
 function AddProduct() {
+  const { edit, product } = useSelector((state) => state.product)
   const [activeStep, setActiveStep] = useState(0)
   const [completedSteps, setCompletedSteps] = useState({})
 
