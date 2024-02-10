@@ -24,30 +24,18 @@ import { getSubCategories } from './Redux/services/subCategory.service'
 import { getVariants } from './Redux/services/variant.service'
 import Alert from '@mui/material/Alert'
 import { clearAlert } from './Redux/features/alert.slice';
-import client from './Redux/services/index';
-import { setuserdata } from './Redux/features/auth.slice';
+import { getSeller } from './Redux/services/auth.service';
 
 
 const ProtectedRoute = () => {
   const dispatch = useDispatch()
   const { userToken } = useSelector((state) => state.auth)
-  if (!userToken) return <Navigate to="/login" />
-  else {
-    client.get('users/seller/', {
-      headers: {
-        Authorization: `Bearer ${userToken}`,
-      }
-    })
-      .then((res) => {
-        console.log(res.data.data);
-        dispatch(setuserdata({ ...res.data.data }))
-      })
-      .catch((err) => {
-        console.log(err)
-        return <Navigate to="/login" />
-      })
-    return <Outlet />
-  }
+  useEffect(() => {
+    if (userToken) {
+      dispatch(getSeller({}))
+    }
+  }, [])
+  return userToken ? <Outlet /> : <Navigate to="/login" replace />
 }
 
 function App() {
