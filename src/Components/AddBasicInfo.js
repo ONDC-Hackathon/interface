@@ -72,11 +72,11 @@ function AddBasicInfo({ steps, activeStep, setActiveStep, handleNext }) {
       dispatch(
         setAlert({
           type: 'error',
-          message: response.error,
+          message: response.error.message,
         }),
       )
     } else {
-      handleNext(e)
+      handleNext(event)
     }
   }
 
@@ -278,20 +278,6 @@ function AddBasicInfo({ steps, activeStep, setActiveStep, handleNext }) {
         </Grid>
       </Grid>
       <div className="flex justify-end space-x-4">
-        {activeStep !== steps.length - 1 && (
-          <Button
-            variant="outlined"
-            sx={{
-              borderRadius: '15px',
-              fontWeight: '900',
-              borderWidth: '2px',
-            }}
-            color="success"
-            onClick={handleSubmit}
-          >
-            Save
-          </Button>
-        )}
         <Button
           variant="contained"
           color="success"

@@ -13,7 +13,6 @@ import {
 import AddBasicInfo from '../Components/AddBasicInfo'
 import AddDetailedInfo from '../Components/AddDetailedInfo'
 import AddImages from '../Components/AddImages'
-import AddCompliances from '../Components/AddCompliances'
 import Review from '../Components/Review'
 
 const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
@@ -43,7 +42,6 @@ const steps = [
   'Basic Product Information',
   'Detailed Specification',
   'Product Images',
-  'Compliances & Certification',
   'Review',
 ]
 
@@ -77,15 +75,6 @@ const ActiveTab = ({ steps, activeStep, setActiveStep, handleNext }) => {
         />
       )
     case 3:
-      return (
-        <AddCompliances
-          steps={steps}
-          activeStep={activeStep}
-          setActiveStep={setActiveStep}
-          handleNext={handleNext}
-        />
-      )
-    case 4:
       return (
         <Review
           steps={steps}

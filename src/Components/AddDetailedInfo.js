@@ -12,6 +12,7 @@ import Button from '@mui/material/Button'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAttributes } from '../Redux/services/attribute.service'
 import { addProductAttribute } from '../Redux/services/product.service'
+import { setAlert } from '../Redux/features/alert.slice'
 
 function AddDetailedInfo({ steps, activeStep, setActiveStep, handleNext }) {
   const dispatch = useDispatch()
@@ -61,9 +62,19 @@ function AddDetailedInfo({ steps, activeStep, setActiveStep, handleNext }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    const res = await dispatch(
+    const response = await dispatch(
       addProductAttribute({ product_id: product.id, attributes: inputValues }),
     )
+    if (response.meta.requestStatus == 'rejected') {
+      dispatch(
+        setAlert({
+          type: 'error',
+          message: response.error.message,
+        }),
+      )
+    } else {
+      handleNext(event)
+    }
   }
 
   return (
@@ -180,20 +191,6 @@ function AddDetailedInfo({ steps, activeStep, setActiveStep, handleNext }) {
         </Grid>
       </Grid>
       <div className="flex justify-end space-x-4">
-        {activeStep !== steps.length - 1 && (
-          <Button
-            variant="outlined"
-            sx={{
-              borderRadius: '15px',
-              fontWeight: '900',
-              borderWidth: '2px',
-            }}
-            color="success"
-            onClick={handleSubmit}
-          >
-            Save
-          </Button>
-        )}
         <Button
           variant="contained"
           color="success"
@@ -202,10 +199,7 @@ function AddDetailedInfo({ steps, activeStep, setActiveStep, handleNext }) {
             borderRadius: '15px',
             fontWeight: '900',
           }}
-          onClick={async (e) => {
-            await handleSubmit(e)
-            handleNext(e)
-          }}
+          onClick={(e) => handleSubmit(e)}
         >
           {activeStep !== steps.length - 1 ? 'Save & Next' : 'Submit'}
         </Button>
